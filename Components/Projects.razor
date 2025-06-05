@@ -1,0 +1,64 @@
+﻿<!-- Components/Projects.razor -->
+@inject HttpClient Http
+
+<section id="projects" class="projects-section">
+    <h2 class="section-title">Some Projects I’ve Built</h2>
+
+    @if (projects == null)
+    {
+        <p>Loading...</p>
+    }
+    else if (!projects.Any())
+    {
+        <p>No projects to show yet.</p>
+    }
+    else
+    {
+        <div class="project-grid">
+            @foreach (var p in projects)
+            {
+                <ProjectCard Title="@p.Title" Description="@p.Description" ImageUrl="@p.ImageUrl" Link="@p.Link" />
+            }
+        </div>
+    }
+</section>
+
+@code {
+    public class ProjectModel
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+        public string Link { get; set; }
+    }
+
+    List<ProjectModel> projects;
+
+    protected override async Task OnInitializedAsync()
+    {
+        projects = await Http.GetFromJsonAsync<List<ProjectModel>>("data/projects.json");
+    }
+}
+
+<style>
+    .projects-section {
+        max-width: 900px;
+        margin: 4rem auto;
+        padding: 0 2rem;
+        text-align: center;
+        color: var(--text-primary);
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+    }
+
+    .project-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        justify-items: center;
+    }
+</style>

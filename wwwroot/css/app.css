@@ -1,0 +1,210 @@
+/* Base Typography */
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: clamp(14px, 1.5vw, 18px);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+    h1:focus, h2:focus, h3:focus, h4:focus, h5:focus, h6:focus {
+        outline: none;
+    }
+
+h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+}
+
+h3 {
+    font-size: clamp(1.3rem, 2.8vw, 2rem);
+}
+
+h4 {
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+}
+
+h5 {
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+}
+
+h6 {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+/* Links */
+a, .btn-link {
+    color: var(--btn-bg);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+    a:hover, .btn-link:hover {
+        color: var(--btn-bg-hover);
+    }
+
+/* Buttons */
+.btn-primary {
+    color: var(--btn-text);
+    background-color: var(--btn-bg);
+    border: 1px solid var(--btn-bg-hover);
+    padding: 0.5rem 1rem;
+    font-size: clamp(0.9rem, 1.5vw, 1rem);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: var(--btn-bg-hover);
+        border-color: var(--btn-bg-hover);
+        outline: none;
+    }
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem var(--btn-text), 0 0 0 0.25rem var(--btn-bg);
+    outline: none;
+}
+
+/* Content spacing */
+.content {
+    padding-top: 1.2rem;
+    padding-inline: clamp(0.8rem, 3vw, 1.5rem);
+}
+
+/* Form Validation */
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid #ff4d4f;
+}
+
+.validation-message {
+    color: #ff4d4f;
+    font-size: 0.875rem;
+}
+
+/* Cards */
+.project-card, .card {
+    background-color: var(--card-bg);
+    padding: clamp(0.8rem, 2vw, 1.2rem);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+    .project-card img {
+        max-width: 100%;
+        border-radius: 6px;
+    }
+
+/* Error UI */
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.blazor-error-boundary {
+    background: url('data:image/svg+xml;base64,...') no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+    .blazor-error-boundary::after {
+        content: "An error has occurred.";
+        font-weight: bold;
+    }
+
+/* Loading Indicator */
+.loading-progress {
+    display: block;
+    width: clamp(6rem, 15vw, 8rem);
+    height: clamp(6rem, 15vw, 8rem);
+    margin: 20vh auto 1rem auto;
+    position: relative;
+}
+
+    .loading-progress circle {
+        fill: none;
+        stroke: #e0e0e0;
+        stroke-width: 0.6rem;
+        transform-origin: 50% 50%;
+        transform: rotate(-90deg);
+    }
+
+        .loading-progress circle:last-child {
+            stroke: var(--btn-bg);
+            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+            transition: stroke-dasharray 0.3s linear;
+        }
+
+/* Light and Dark Mode Variables */
+:root {
+    --bg: #ffffff;
+    --text-primary: #121212;
+    --btn-bg: #1976d2;
+    --btn-bg-hover: #125ea6;
+    --btn-text: #ffffff;
+    --card-bg: #f8f8f8;
+}
+
+.dark {
+    --bg: #121212;
+    --text-primary: #eeeeee;
+    --btn-bg: #4dabf5;
+    --btn-bg-hover: #90caf9;
+    --btn-text: #121212;
+    --card-bg: #1e1e1e;
+}
+
+/* Media Queries */
+@media (max-width: 599px) {
+    .btn-primary {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .project-card, .card {
+        padding: 0.8rem;
+    }
+
+    .content {
+        padding: 0.8rem;
+    }
+}

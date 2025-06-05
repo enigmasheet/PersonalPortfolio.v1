@@ -1,0 +1,21 @@
+﻿@inherits LayoutComponentBase
+
+<div class="app-container">
+    <NavMenu />
+    <main>
+        @Body
+    </main>
+</div>
+
+<style>
+    .app-container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    main {
+        flex-grow: 1;
+        padding: 80px 20px 20px; /* account for fixed nav */
+    }
+</style>

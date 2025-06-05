@@ -1,0 +1,197 @@
+﻿@inject HttpClient Http
+
+<section id="experience" class="experience-section">
+    <h2 class="section-title">My Experience</h2>
+    <p class="section-description">Here are some of the projects and experiences I've had so far.</p>
+
+    @if (experiences == null)
+    {
+        <p>Loading experiences...</p>
+    }
+    else if (!experiences.Any())
+    {
+        <p>No experiences found.</p>
+    }
+    else
+    {
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            <div class="timeline-items">
+                @foreach (var exp in experiences.OrderByDescending(e => e.Date))
+                {
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="experience-card">
+                            <div class="timeline-date">@exp.Date.ToString("MMM yyyy")</div>
+                            <img src="@exp.ImageUrl" alt="@exp.Title" class="experience-image" />
+                            <h3>@exp.Title</h3>
+                            <p>@exp.Description</p>
+                            <p><a href="@exp.Link" target="_blank" rel="noopener noreferrer">View Project</a></p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</section>
+
+@code {
+    public class ExperienceModel
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+        public string Link { get; set; }
+        public DateTime Date { get; set; }
+    }
+    private List<ExperienceModel> experiences;
+
+    protected override async Task OnInitializedAsync()
+    {
+        experiences = await Http.GetFromJsonAsync<List<ExperienceModel>>("data/experience.json");
+    }
+}
+
+<style>
+    .experience-section {
+        max-width: 700px;
+        margin: 4rem auto;
+        padding: 0 1rem;
+        color: var(--text-primary);
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .section-description {
+        margin-bottom: 3rem;
+        font-size: 1.125rem;
+        color: var(--text-secondary);
+    }
+
+    /* Timeline container */
+    .timeline-container {
+        position: relative;
+        padding-left: 40px; /* space for line and markers */
+    }
+
+    /* Vertical line */
+    .timeline-line {
+        position: absolute;
+        top: 0;
+        left: 18px;
+        width: 4px;
+        height: 100%;
+        background-color: #0078d4;
+        border-radius: 2px;
+        z-index: 0;
+    }
+
+    /* Timeline items container */
+    .timeline-items {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Each timeline item */
+    .timeline-item {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    /* Circle marker on the timeline */
+    .timeline-marker {
+        position: absolute;
+        left: 0;
+        top: 10px; /* aligns roughly center with card's top content */
+        width: 18px;
+        height: 18px;
+        background-color: #0078d4;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 0 5px rgba(0,120,212,0.6);
+        z-index: 2;
+    }
+
+    /* Experience card */
+    .experience-card {
+        background: #f9f9f9;
+        padding: 1.5rem 1rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 600px;
+        text-align: left;
+        margin-left: 40px; /* space from timeline */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .timeline-date {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .experience-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+    }
+
+    .experience-card h3 {
+        margin: 0 0 0.5rem 0;
+    }
+
+    .experience-card p {
+        margin: 0.25rem 0;
+    }
+
+    .experience-card a {
+        color: #0078d4;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+        .experience-card a:hover {
+            text-decoration: underline;
+        }
+
+    /* Responsive adjustments */
+    @@media (max-width: 600px) {
+        .experience-section
+
+    {
+        padding: 0 1rem;
+    }
+
+    .experience-card {
+        max-width: 100%;
+        margin-left: 35px;
+    }
+
+    .timeline-line {
+        left: 14px;
+        width: 3px;
+    }
+
+    .timeline-marker {
+        left: -4px;
+        width: 14px;
+        height: 14px;
+        border-width: 2px;
+    }
+
+    }
+</style>

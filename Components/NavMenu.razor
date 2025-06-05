@@ -1,0 +1,52 @@
+﻿<nav class="nav">
+    <div class="logo">Abhay</div>
+    <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <ThemeToggle />
+</nav>
+
+<style>
+    .nav {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        padding: 20px 40px;
+        z-index: 999;
+        /* Use gap to control spacing between logo and nav-links */
+        gap: 40px;
+    }
+
+    /* Logo stays at left, no flex-grow */
+    .logo {
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    /* nav-links aligned left, right next to logo */
+    .nav-links {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Push ThemeToggle to far right */
+    ThemeToggle {
+        margin-left: auto; /* this pushes ThemeToggle all the way right */
+    }
+
+    /* Optional: style links */
+    .nav-links a {
+        text-decoration: none;
+        color: var(--text-color);
+        font-weight: 500;
+    }
+</style>
