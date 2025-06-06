@@ -30,15 +30,15 @@ jobs:
         run: dotnet restore
 
       - name: Build the project
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build PersonalPortfolio.v1/PersonalPortfolio.v1.csproj --configuration Release --no-restore
 
       - name: Publish the Blazor WebAssembly app
-        run: dotnet publish --configuration Release --output build
+        run: dotnet publish PersonalPortfolio.v1/PersonalPortfolio.v1.csproj --configuration Release --output build
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           action: "upload"
-          app_location: "/"                # Root of the repo
-          api_location: ""                 # No backend API
-          output_location: "build/wwwroot" # Must match the publish output
+          app_location: "/"                
+          api_location: ""                 
+          output_location: "build/wwwroot"
