@@ -1,0 +1,14 @@
+﻿[
+  {
+    "Title": "Smart Greenhouse",
+    "Description": "A system to monitor and control greenhouse conditions using IoT and Blazor.",
+    "ImageUrl": "images/greenhouse.png",
+    "Link": "https://github.com/enigmasheet/LocalFarm"
+  },
+  {
+    "Title": "Quiz App",
+    "Description": "Competitive exam quiz application with score tracking.",
+    "ImageUrl": "images/quiz.png",
+    "Link": "https://github.com/yourname/quiz-app"
+  }
+]

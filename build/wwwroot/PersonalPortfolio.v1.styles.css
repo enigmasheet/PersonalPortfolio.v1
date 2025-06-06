@@ -1,0 +1,111 @@
+/* /Components/Social.razor.rz.scp.css */
+:root[b-7kdl70y3rd] {
+    --bg: #ffffff;
+    --text-primary: #121212;
+    --btn-bg: #1976d2;
+    --btn-bg-hover: #125ea6;
+    --btn-text: #ffffff;
+    --card-bg: #f8f8f8;
+    --social-border: #cccccc;
+    --social-border-hover: #1976d2;
+    --social-icon: #121212;
+    --social-icon-hover: #1976d2;
+}
+
+.dark[b-7kdl70y3rd] {
+    --bg: #121212;
+    --text-primary: #eeeeee;
+    --btn-bg: #4dabf5;
+    --btn-bg-hover: #90caf9;
+    --btn-text: #121212;
+    --card-bg: #1e1e1e;
+    --social-border: #444;
+    --social-border-hover: #90caf9;
+    --social-icon: #eeeeee;
+    --social-icon-hover: #90caf9;
+}
+
+.social[b-7kdl70y3rd] {
+    position: fixed;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+}
+
+    .social ul[b-7kdl70y3rd] {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .social ul li[b-7kdl70y3rd] {
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+            .social ul li a[b-7kdl70y3rd] {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 50px;
+                height: 50px;
+                border: 2px solid var(--social-border);
+                border-radius: 50%;
+                text-decoration: none;
+                color: var(--social-icon);
+                transition: all 0.3s ease;
+                position: relative;
+            }
+
+                .social ul li a i[b-7kdl70y3rd] {
+                    font-size: 20px;
+                    transition: all 0.3s ease;
+                    z-index: 1;
+                }
+
+                .social ul li a[b-7kdl70y3rd]::before {
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 50%;
+                    background: var(--social-border-hover);
+                    opacity: 0;
+                    transform: scale(0.9);
+                    transition: all 0.3s ease;
+                    z-index: 0;
+                }
+
+                .social ul li a:hover[b-7kdl70y3rd] {
+                    border-color: var(--social-border-hover);
+                    color: var(--social-icon-hover);
+                }
+
+                    .social ul li a:hover i[b-7kdl70y3rd] {
+                        color: var(--social-icon-hover);
+                        text-shadow: 0 0 10px var(--social-icon-hover);
+                    }
+
+                    .social ul li a:hover[b-7kdl70y3rd]::before {
+                        opacity: 0.1;
+                        transform: scale(1.2);
+                    }
+
+/* Mobile tweaks */
+@media only screen and (max-width: 480px) {
+    .social[b-7kdl70y3rd] {
+        right: 0.5rem;
+    }
+
+        .social ul li a[b-7kdl70y3rd] {
+            width: 40px;
+            height: 40px;
+        }
+
+            .social ul li a i[b-7kdl70y3rd] {
+                font-size: 16px;
+            }
+}

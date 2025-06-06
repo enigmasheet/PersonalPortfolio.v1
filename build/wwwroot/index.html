@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PersonalPortfolio.v1</title>
+    <base href="/" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="PersonalPortfolio.v1.styles.css" rel="stylesheet" />
+    <!-- Font Awesome 6 (latest) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Preload -->
+    <link rel="preload" href="data/animation.json" as="fetch" crossorigin="anonymous" />
+
+    <style>
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.6s ease;
+            flex-direction: column;
+        }
+
+            #loader.hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+        #app {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+            #app.visible {
+                display: block;
+                opacity: 1;
+            }
+
+        .fallback-spinner {
+            display: none;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div id="loader" aria-busy="true" role="status">
+        <div id="lottie-animation" style="width: 300px; height: 300px;"></div>
+        <div class="spinner-border text-primary fallback-spinner" role="status" id="bootstrap-spinner">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Blazor App Root -->
+    <div id="app"></div>
+
+    <!-- Error UI -->
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+    <script src="scripts/theme.js"></script>
+
+    <script>
+        const loader = document.getElementById('loader');
+        const app = document.getElementById('app');
+        const spinner = document.getElementById('bootstrap-spinner');
+        const lottieContainer = document.getElementById('lottie-animation');
+
+        let animationRendered = false;
+
+        // Try to fetch Lottie JSON and load animation
+        fetch("data/animation.json")
+            .then(res => res.json())
+            .then(data => {
+                lottie.loadAnimation({
+                    container: lottieContainer,
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    animationData: data,
+                    rendererSettings: {
+                        preserveAspectRatio: 'xMidYMid slice'
+                    }
+                });
+                animationRendered = true;
+            })
+            .catch(() => {
+                spinner.style.display = 'block';
+            });
+
+        // Fallback spinner if Lottie takes too long
+        setTimeout(() => {
+            if (!animationRendered) {
+                spinner.style.display = 'block';
+            }
+        }, 2000);
+
+        // Safety fallback: hide loader after 10 seconds if something breaks
+        const forceShowApp = () => {
+            loader.classList.add('hidden');
+            loader.addEventListener('transitionend', () => {
+                loader.style.display = 'none';
+                app.classList.add('visible');
+            }, { once: true });
+        };
+
+        setTimeout(() => {
+            if (!app.classList.contains('visible')) {
+                console.warn("Timeout fallback triggered: forcing loader to hide.");
+                forceShowApp();
+            }
+        }, 10000);
+
+        // Start Blazor
+        window.onload = () => {
+            Blazor.start().then(() => {
+                forceShowApp();
+            }).catch(err => {
+                console.error("Blazor failed to start:", err);
+                spinner.style.display = 'block';
+            });
+        };
+    </script>
+
+</body>
+</html>
