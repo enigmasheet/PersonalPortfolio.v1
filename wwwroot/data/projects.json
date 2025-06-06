@@ -1,14 +1,42 @@
 ﻿[
   {
+    "Title": "Transport Expenditure Tracker",
+    "Description": "A web app to manage and track transport-related expenses efficiently.",
+    "ImageUrl": "images/transport.png",
+    "GitHubLink": "https://github.com/enigmasheet/TransportExpenditureTracker",
+    "LiveDemo": "https://transportexpense.azurewebsites.net/",
+    "LiveDemoActive": true
+  },
+  {
     "Title": "Smart Greenhouse",
     "Description": "A system to monitor and control greenhouse conditions using IoT and Blazor.",
     "ImageUrl": "images/greenhouse.png",
-    "Link": "https://github.com/enigmasheet/LocalFarm"
+    "GitHubLink": "https://github.com/enigmasheet/LocalFarm",
+    "LiveDemo": "https://zealous-glacier-0fddea800.4.azurestaticapps.net/",
+    "LiveDemoActive": true
   },
   {
-    "Title": "Quiz App",
-    "Description": "Competitive exam quiz application with score tracking.",
-    "ImageUrl": "images/quiz.png",
-    "Link": "https://github.com/yourname/quiz-app"
+    "Title": "Personal Portfolio",
+    "Description": "My personal website showcasing projects, skills, and experiences.",
+    "ImageUrl": "images/portfolio.png",
+    "GitHubLink": "https://github.com/enigmasheet/PersonalPortfolio.v1",
+    "LiveDemo": "https://gentle-sand-0c50cf600.6.azurestaticapps.net/",
+    "LiveDemoActive": true
+  },
+  {
+    "Title": "Hotel Booking API",
+    "Description": "RESTful API for hotel booking management with authentication and data validation.",
+    "ImageUrl": "images/hotel.png",
+    "GitHubLink": "https://github.com/enigmasheet/HotelBookingAPI",
+    "LiveDemo": "",
+    "LiveDemoActive": false
+  },
+  {
+    "Title": "Laundry Management System",
+    "Description": "Application to streamline laundry service operations and order tracking.",
+    "ImageUrl": "images/laundry.png",
+    "GitHubLink": "https://github.com/enigmasheet/Laundary-Management-System",
+    "LiveDemo": "",
+    "LiveDemoActive": false
   }
 ]

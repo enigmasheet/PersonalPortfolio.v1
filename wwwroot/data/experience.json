@@ -1,16 +1,42 @@
 [
   {
-    "Title": "Smart Greenhouse",
-    "Description": "A system to monitor and control greenhouse conditions using IoT and Blazor.",
-    "ImageUrl": "images/greenhouse.png",
-    "Link": "https://github.com/enigmasheet/LocalFarm",
-    "Date": "2023-01-01"
+    "Title": "Software Developer",
+    "Company": "Codebee Nepal Pvt Ltd",
+    "Description": "Developing and maintaining Logistics Management System, building .NET-based applications using C#, ASP.NET MVC, and Blazor. Responsible for RESTful API design, SQL Server and Entity Framework integration, and optimizing performance for scalability and security.",
+    "Link": "",
+    "Date": "2025-03-01",
+    "EndDate": null
   },
   {
-    "Title": "Quiz App",
-    "Description": "Competitive exam quiz application with score tracking.",
-    "ImageUrl": "images/quiz.png",
-    "Link": "https://github.com/yourname/quiz-app",
-    "Date": "2022-05-01"
+    "Title": "Project Manager || Co Founder",
+    "Company": "Sunya Technology Pvt Ltd",
+    "Description": "Managed projects at Sunya Technology with a focus on software development and coordination, ensuring smooth delivery within timelines and quality benchmarks.",
+    "Link": "",
+    "Date": "2024-12-01",
+    "EndDate": null
+  },
+  {
+    "Title": "Robotics/Tech Event Lead",
+    "Company": "Robotics Association of Nepal",
+    "Description": "Led robotics and tech events at Robotics Association of Nepal. Coordinated teams and logistics for events, fostering innovation and technical skill development.",
+    "Link": "",
+    "Date": "2022-12-01",
+    "EndDate": "2024-12-01"
+  },
+  {
+    "Title": "Intern",
+    "Company": "Robotics Association of Nepal",
+    "Description": "Interned at Robotics Association of Nepal focusing on robotics and event coordination. Gained hands-on experience in robotics technology and youth engagement.",
+    "Link": "",
+    "Date": "2022-06-01",
+    "EndDate": "2022-12-01"
+  },
+  {
+    "Title": "Robotics Instructor",
+    "Company": "Ujjwal Education",
+    "Description": "Taught students from grades 5 to 12 at Ujjwal Education. Conducted project-based learning in robotics using Arduino and Raspberry Pi Pico. Mentored students for robotics competitions, emphasizing STEM education and innovation.",
+    "Link": "",
+    "Date": "2022-06-01",
+    "EndDate": "2022-12-01"
   }
 ]

@@ -1,5 +1,4 @@
-﻿<!-- Components/Projects.razor -->
-@inject HttpClient Http
+﻿@inject HttpClient Http
 
 <section id="projects" class="projects-section">
     <h2 class="section-title">Some Projects I’ve Built</h2>
@@ -17,7 +16,12 @@
         <div class="project-grid">
             @foreach (var p in projects)
             {
-                <ProjectCard Title="@p.Title" Description="@p.Description" ImageUrl="@p.ImageUrl" Link="@p.Link" />
+                <ProjectCard Title="@p.Title"
+                             Description="@p.Description"
+                             ImageUrl="@p.ImageUrl"
+                             GitHubLink="@p.GitHubLink"
+                             LiveDemo="@p.LiveDemo"
+                             LiveDemoActive="@p.LiveDemoActive" />
             }
         </div>
     }
@@ -29,7 +33,9 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
-        public string Link { get; set; }
+        public string GitHubLink { get; set; }
+        public string LiveDemo { get; set; }
+        public bool LiveDemoActive { get; set; }
     }
 
     List<ProjectModel> projects;

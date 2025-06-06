@@ -1,16 +1,35 @@
-﻿<!-- Components/ProjectCard.razor -->
-<div class="project-card">
+﻿<div class="project-card">
     <img src="@ImageUrl" alt="@Title" class="project-image" />
     <h3 class="project-title">@Title</h3>
     <p class="project-description">@Description</p>
-    <a href="@Link" target="_blank" rel="noopener noreferrer" class="project-link">View Project</a>
+
+    <div class="project-links">
+        <a href="@GitHubLink" target="_blank" rel="noopener noreferrer" class="project-link">
+            View on GitHub
+        </a>
+
+        @if (LiveDemoActive && !string.IsNullOrWhiteSpace(LiveDemo))
+        {
+            <a href="@LiveDemo" target="_blank" rel="noopener noreferrer" class="project-link live-demo">
+                Live Demo
+            </a>
+        }
+        else
+        {
+            <button class="project-link live-demo disabled" disabled title="Live demo not available">
+                Live Demo
+            </button>
+        }
+    </div>
 </div>
 
 @code {
     [Parameter] public string Title { get; set; }
     [Parameter] public string Description { get; set; }
     [Parameter] public string ImageUrl { get; set; }
-    [Parameter] public string Link { get; set; }
+    [Parameter] public string GitHubLink { get; set; }
+    [Parameter] public string LiveDemo { get; set; }
+    [Parameter] public bool LiveDemoActive { get; set; } = false;
 }
 
 <style>
@@ -51,6 +70,11 @@
         flex-grow: 1;
     }
 
+    .project-links {
+        display: flex;
+        gap: 1rem;
+    }
+
     .project-link {
         align-self: flex-start;
         padding: 0.5rem 1.25rem;
@@ -60,9 +84,27 @@
         text-decoration: none;
         font-weight: 600;
         transition: background-color 0.3s ease;
+        cursor: pointer;
+        border: none;
     }
 
         .project-link:hover {
             background-color: var(--btn-bg-hover);
         }
+
+        .project-link.live-demo {
+            background-color: #28a745; /* green */
+            color: white;
+        }
+
+            .project-link.live-demo:hover {
+                background-color: #218838;
+            }
+
+            .project-link.live-demo.disabled {
+                background-color: #6c757d; /* gray */
+                cursor: not-allowed;
+                pointer-events: none;
+                color: #ddd;
+            }
 </style>
