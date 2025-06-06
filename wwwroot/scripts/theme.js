@@ -1,20 +1,26 @@
-﻿function toggleTheme() {
-    const root = document.documentElement;
-    if (root.classList.contains('dark')) {
-        root.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-    } else {
-        root.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
+﻿function colorModeInit() {
+    const colorToggle = document.getElementById("color_mode");
+
+    function applyTheme() {
+        const isChecked = colorToggle?.checked;
+        document.documentElement.classList.toggle("dark", isChecked);
+        document.body.classList.toggle("dark-preview", isChecked);
+        document.body.classList.toggle("white-preview", !isChecked);
+    }
+
+    if (colorToggle) {
+        colorToggle.addEventListener("change", applyTheme);
+        applyTheme(); // Apply theme immediately on page load
     }
 }
 
-// On page load, apply saved theme
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
-});
+function colorModePreview() {
+    // Called externally (e.g. from Blazor) to update the theme
+    const colorToggle = document.getElementById("color_mode");
+    const isChecked = colorToggle?.checked;
+    document.documentElement.classList.toggle("dark", isChecked);
+    document.body.classList.toggle("dark-preview", isChecked);
+    document.body.classList.toggle("white-preview", !isChecked);
+}
+
+document.addEventListener("DOMContentLoaded", colorModeInit);

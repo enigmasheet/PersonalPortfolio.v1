@@ -1,4 +1,6 @@
-/* Root Theme Variables */
+/* ======================
+   THEME VARIABLES
+====================== */
 :root {
     --bg: #ffffff;
     --text-primary: #121212;
@@ -17,11 +19,19 @@
     --card-bg: #1e1e1e;
 }
 
-/* Base Typography & Layout */
+/* ======================
+   BASE STYLES
+====================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: var(--bg);
     color: var(--text-primary);
     font-size: clamp(14px, 1.5vw, 18px);
@@ -59,7 +69,9 @@ h6 {
     font-size: clamp(0.9rem, 1.5vw, 1.1rem);
 }
 
-/* Links */
+/* ======================
+   LINKS & BUTTONS
+====================== */
 a, .btn-link {
     color: var(--btn-bg);
     text-decoration: none;
@@ -72,7 +84,6 @@ a, .btn-link {
         opacity: 0.85;
     }
 
-/* Buttons */
 .btn-primary {
     display: inline-block;
     color: var(--btn-text);
@@ -81,9 +92,13 @@ a, .btn-link {
     padding: 0.6rem 1.2rem;
     font-size: clamp(0.9rem, 1.5vw, 1rem);
     border-radius: 6px;
-    cursor: pointer;
     transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s;
+    will-change: background-color, border-color, transform;
 }
+
+    .btn-primary:not(:disabled) {
+        cursor: pointer;
+    }
 
     .btn-primary:hover,
     .btn-primary:focus {
@@ -99,20 +114,20 @@ a, .btn-link {
         cursor: not-allowed;
     }
 
-/* Focus Styles */
 :focus-visible {
     outline: 2px dashed var(--btn-bg);
     outline-offset: 2px;
 }
 
-/* Containers */
+/* ======================
+   CONTAINERS & LAYOUT
+====================== */
 .content {
     padding: 1.5rem clamp(1rem, 5vw, 2rem);
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Cards */
 .card, .project-card {
     background-color: var(--card-bg);
     padding: clamp(1rem, 2vw, 1.5rem);
@@ -131,7 +146,143 @@ a, .btn-link {
         display: block;
     }
 
-/* Form Validation */
+/* ======================
+   SWITCH STYLES
+====================== */
+div.btn-container {
+    display: inline-block; /* fixed */
+    vertical-align: middle;
+    text-align: center;
+}
+
+    div.btn-container i {
+        display: inline-block;
+        position: relative;
+        top: -13px;
+    }
+
+label {
+    font-size: 13px;
+    color: #424242;
+    font-weight: 500;
+}
+
+.btn-color-mode-switch {
+    display: inline-block;
+    margin: 0;
+    position: relative;
+}
+
+    .btn-color-mode-switch > label.btn-color-mode-switch-inner {
+        width: 160px; /* wider */
+        height: 40px; /* taller */
+        border-radius: 30px;
+        background: #E0E0E0;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        display: block;
+    }
+
+        .btn-color-mode-switch > label.btn-color-mode-switch-inner:before {
+            content: attr(data-on);
+            position: absolute;
+            font-size: 14px;
+            font-weight: 500;
+            top: 12px;
+            right: 30px;
+            color: #666;
+        }
+
+        .btn-color-mode-switch > label.btn-color-mode-switch-inner:after {
+            content: attr(data-off);
+            width: 80px; /* wider */
+            height: 30px; /* taller */
+            background: #fff;
+            border-radius: 30px;
+            position: absolute;
+            left: 3px;
+            top: 5px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0px 0px 6px -2px #111;
+            padding: 7px 0;
+            font-size: 14px;
+            line-height: 16px;
+        }
+
+    .btn-color-mode-switch input[type="checkbox"] {
+        cursor: pointer;
+        width: 160px; /* fixed */
+        height: 40px; /* fixed */
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        margin: 0;
+    }
+
+        .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner {
+            background: #151515;
+            color: #fff;
+        }
+
+            .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after {
+                content: attr(data-on);
+                left: 77px;
+                background: #3c3c3c;
+            }
+
+            .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before {
+                content: attr(data-off);
+                right: auto;
+                left: 30px;
+            }
+
+        .btn-color-mode-switch input[type="checkbox"]:checked ~ .alert {
+            display: block;
+        }
+
+    .btn-color-mode-switch > .alert {
+        display: none;
+        background: #FF9800;
+        border: none;
+        color: #fff;
+    }
+
+/* ======================
+   MODE PREVIEW
+====================== */
+.dark-preview {
+    background: #0d0d0d;
+}
+
+    .dark-preview div.btn-container i.fa-sun-o {
+        color: #777;
+    }
+
+    .dark-preview div.btn-container i.fa-moon-o {
+        color: #fff;
+        text-shadow: 0 0 11px #fff;
+    }
+
+.white-preview {
+    background: #fff;
+}
+
+    .white-preview div.btn-container i.fa-sun-o {
+        color: #ffa500;
+        text-shadow: 0 0 16px #ffa500;
+    }
+
+    .white-preview div.btn-container i.fa-moon-o {
+        color: #777;
+    }
+
+/* ======================
+   FORM VALIDATION
+====================== */
 .valid.modified:not([type=checkbox]) {
     outline: 2px solid #26b050;
 }
@@ -146,7 +297,9 @@ a, .btn-link {
     margin-top: 0.25rem;
 }
 
-/* Blazor Error UI */
+/* ======================
+   BLAZOR ERROR UI
+====================== */
 #blazor-error-ui {
     background: lightyellow;
     position: fixed;
@@ -183,34 +336,7 @@ a, .btn-link {
         top: 1rem;
     }
 
+/* ======================
+   PARAGRAPH BY CLASS
+====================== */
 
-/* Media Queries */
-@media (max-width: 768px) {
-    .content {
-        padding: 1rem;
-    }
-
-    .btn-primary {
-        padding: 0.5rem 1rem;
-        font-size: 0.95rem;
-    }
-
-    .card, .project-card {
-        padding: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    html, body {
-        font-size: 15px;
-    }
-
-    .btn-primary {
-        width: 100%;
-        text-align: center;
-    }
-
-    .content {
-        padding: 0.75rem;
-    }
-}
