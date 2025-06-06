@@ -79,70 +79,77 @@
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" integrity="sha512-jEnuDt6jfecCjthQAJ+ed0MTVA++5ZKmlUcmDGBv2vUI/REn6FuIdixLNnQT+vKusE2hhTk2is3cFvv5wA+Sgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="_framework/blazor.webassembly.js" autostart="false"></script>
     <script src="scripts/theme.js"></script>
 
     <script>
-        const loader = document.getElementById('loader');
-        const app = document.getElementById('app');
-        const spinner = document.getElementById('bootstrap-spinner');
-        const lottieContainer = document.getElementById('lottie-animation');
+    const loader = document.getElementById('loader');
+    const app = document.getElementById('app');
+    const spinner = document.getElementById('bootstrap-spinner');
+    const lottieContainer = document.getElementById('lottie-animation');
 
-        let animationRendered = false;
+    let lottieLoaded = false;
 
-        // Try to fetch Lottie JSON and load animation
-        fetch("data/animation.json")
-            .then(res => res.json())
-            .then(data => {
-                lottie.loadAnimation({
-                    container: lottieContainer,
-                    renderer: 'svg',
-                    loop: true,
-                    autoplay: true,
-                    animationData: data,
-                    rendererSettings: {
-                        preserveAspectRatio: 'xMidYMid slice'
-                    }
-                });
-                animationRendered = true;
+    // Load the Lottie animation
+    fetch("data/animation.json")
+        .then(res => res.json())
+        .then(data => {
+            lottie.loadAnimation({
+                container: lottieContainer,
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                animationData: data,
+                rendererSettings: {
+                    preserveAspectRatio: 'xMidYMid slice'
+                }
+            });
+            lottieLoaded = true;
+        })
+        .catch(err => {
+            console.warn("Lottie failed to load. Showing fallback spinner.", err);
+            spinner.style.display = 'block';
+        });
+
+    // Show spinner if Lottie doesn't render in 2 seconds
+    setTimeout(() => {
+        if (!lottieLoaded) {
+            spinner.style.display = 'block';
+        }
+    }, 2000);
+
+    // Fallback to show app if loader gets stuck
+    const forceShowApp = () => {
+        loader.classList.add('hidden');
+        setTimeout(() => {
+            loader.style.display = 'none';
+            app.classList.add('visible');
+        }, 600); // match CSS transition duration
+    };
+
+    // Always hide loader after 10s no matter what
+    setTimeout(() => {
+        if (!app.classList.contains('visible')) {
+            console.warn("Loader timeout reached. Forcing app to show.");
+            forceShowApp();
+        }
+    }, 15000);
+
+    // Start Blazor on full load
+    window.addEventListener("load", () => {
+        Blazor.start()
+            .then(() => {
+                forceShowApp();
             })
-            .catch(() => {
+            .catch(err => {
+                console.error("Blazor failed to start. Showing spinner fallback.", err);
                 spinner.style.display = 'block';
+                forceShowApp(); // fallback display even if Blazor fails
             });
+    });
+</script>
 
-        // Fallback spinner if Lottie takes too long
-        setTimeout(() => {
-            if (!animationRendered) {
-                spinner.style.display = 'block';
-            }
-        }, 2000);
-
-        // Safety fallback: hide loader after 10 seconds if something breaks
-        const forceShowApp = () => {
-            loader.classList.add('hidden');
-            loader.addEventListener('transitionend', () => {
-                loader.style.display = 'none';
-                app.classList.add('visible');
-            }, { once: true });
-        };
-
-        setTimeout(() => {
-            if (!app.classList.contains('visible')) {
-                console.warn("Timeout fallback triggered: forcing loader to hide.");
-                forceShowApp();
-            }
-        }, 10000);
-
-        // Start Blazor
-        window.onload = () => {
-            Blazor.start().then(() => {
-                forceShowApp();
-            }).catch(err => {
-                console.error("Blazor failed to start:", err);
-                spinner.style.display = 'block';
-            });
-        };
-    </script>
 
 </body>
 </html>
