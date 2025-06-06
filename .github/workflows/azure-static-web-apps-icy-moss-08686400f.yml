@@ -29,14 +29,17 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Show directory structure for debugging
+        run: ls -R
+
       - name: Restore dependencies
-        run: dotnet restore PersonalPortfolio.v1/PersonalPortfolio.v1.csproj
+        run: dotnet restore ./PersonalPortfolio.v1/PersonalPortfolio.v1.csproj
 
       - name: Build project
-        run: dotnet build PersonalPortfolio.v1/PersonalPortfolio.v1.csproj --configuration Release --no-restore
+        run: dotnet build ./PersonalPortfolio.v1/PersonalPortfolio.v1.csproj --configuration Release --no-restore
 
       - name: Publish Blazor WebAssembly app
-        run: dotnet publish PersonalPortfolio.v1/PersonalPortfolio.v1.csproj --configuration Release --output PersonalPortfolio.v1/build
+        run: dotnet publish ./PersonalPortfolio.v1/PersonalPortfolio.v1.csproj --configuration Release --output ./PersonalPortfolio.v1/build
 
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
