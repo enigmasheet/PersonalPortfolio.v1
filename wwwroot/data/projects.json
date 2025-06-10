@@ -10,13 +10,13 @@
     "Tags": [ "Web App", "Finance", "Productivity" ]
   },
   {
-    "Title": "Smart Greenhouse",
+    "Title": "Local Farm:Smart Greenhouse",
     "Description": "IoT-enabled system for real-time monitoring and automated control of greenhouse environments using Blazor and sensor data.",
     "ImageUrls": [ "images/greenhouse.png" ],
     "GitHubLink": "https://github.com/enigmasheet/LocalFarm",
     "LiveDemo": "https://zealous-glacier-0fddea800.4.azurestaticapps.net/",
     "LiveDemoActive": true,
-    "Technologies": [ "Blazor", "IoT", "Azure IoT Hub", "C#" ],
+    "Technologies": [ "NodeMCU", "IoT", "React", "Js","Arduino" ],
     "Tags": [ "IoT", "Automation", "Agriculture" ]
   },
   {
