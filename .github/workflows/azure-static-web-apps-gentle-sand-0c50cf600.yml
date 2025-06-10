@@ -43,7 +43,9 @@ jobs:
           action: "upload"
           app_location: "."  # Blazor WebAssembly project in root
           output_location: "bin/Release/net8.0/publish/wwwroot"  # Final static site output
-          app_build_command: "dotnet publish -c Release"  
+          app_build_command: >
+            dotnet workload install wasm-tools &&
+            dotnet publish -c Release -p:PublishTrimmed=true -p:RunAOTCompilation=true
           github_id_token: ${{ steps.idtoken.outputs.result }}
 
   close_pull_request_job:
