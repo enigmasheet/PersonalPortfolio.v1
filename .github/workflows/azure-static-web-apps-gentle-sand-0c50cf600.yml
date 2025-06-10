@@ -23,6 +23,22 @@ jobs:
           submodules: true
           lfs: false
 
+      - name: Cache .dotnet folder
+        uses: actions/cache@v3
+        with:
+          path: ~/.dotnet
+          key: ${{ runner.os }}-dotnet-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-dotnet-
+
+      - name: Cache .nuget folder
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
 
@@ -45,6 +61,7 @@ jobs:
           output_location: "bin/Release/net8.0/publish/wwwroot"  # Final static site output
           app_build_command: >
             dotnet workload install wasm-tools &&
+            dotnet clean &&
             dotnet publish -c Release -p:PublishTrimmed=true -p:RunAOTCompilation=true
           github_id_token: ${{ steps.idtoken.outputs.result }}
 
