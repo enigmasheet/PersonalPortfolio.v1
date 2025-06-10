@@ -8,6 +8,8 @@
     --btn-bg-hover: #125ea6;
     --btn-text: #ffffff;
     --card-bg: #f8f8f8;
+    scroll-padding-top: 90px; /* Adjust this to your navbar height */
+    scroll-behavior: smooth; /* Optional: adds smooth scrolling */
 }
 
 .dark {
