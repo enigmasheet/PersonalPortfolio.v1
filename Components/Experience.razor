@@ -19,18 +19,19 @@
             <div class="timeline-items">
                 @foreach (var exp in experiences.OrderByDescending(e => e.Date))
                 {
-                    <div class="timeline-item">
+                    <div class="timeline-item" tabindex="0" aria-label="@($"{exp.Title} at {exp.Company}, from {exp.Date:MMM yyyy} to {(exp.EndDate.HasValue ? exp.EndDate.Value.ToString("MMM yyyy") : "Present")}")">
                         <div class="timeline-marker"></div>
                         <div class="experience-card">
                             <div class="timeline-date">
-                                @exp.Date.ToString("MMM yyyy")
-                                –
-                                @(exp.EndDate.HasValue? exp.EndDate.Value.ToString("MMM yyyy") : "Present")
-                            </div>                            
+                                @exp.Date.ToString("MMM yyyy") – @(exp.EndDate.HasValue? exp.EndDate.Value.ToString("MMM yyyy") : "Present")
+                            </div>
                             <h3>@exp.Title</h3>
                             <h4 class="company-name">@exp.Company</h4>
                             <p>@exp.Description</p>
-                            <p><a href="@exp.Link" target="_blank" rel="noopener noreferrer"></a></p>
+                            @if (!string.IsNullOrWhiteSpace(exp.Link))
+                            {
+                                <p><a href="@exp.Link" target="_blank" rel="noopener noreferrer">View project</a></p>
+                            }
                         </div>
                     </div>
                 }
@@ -43,12 +44,13 @@
     public class ExperienceModel
     {
         public string? Title { get; set; }
-        public string? Company { get; set; } // New field
+        public string? Company { get; set; }
         public string? Description { get; set; }
         public string? Link { get; set; }
         public DateTime Date { get; set; }
-        public DateTime? EndDate { get; set; }// Nullable for current roles
+        public DateTime? EndDate { get; set; }
     }
+
     private List<ExperienceModel> experiences;
 
     protected override async Task OnInitializedAsync()
@@ -57,27 +59,28 @@
     }
 }
 
+
 <style>
     .experience-section {
-        background-color: var(--bg-color);
+        background-color: var(--bg);
         color: var(--text-primary);
         max-width: 700px;
         margin: 4rem auto;
         padding: 0 1rem;
-        color: var(--text-primary);
         text-align: center;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
         font-weight: 700;
         margin-bottom: 1rem;
     }
 
     .section-description {
         margin-bottom: 3rem;
-        font-size: 1.125rem;
-        color: var(--text-secondary);
+        font-size: clamp(1rem, 1.5vw, 1.125rem);
+        color: var(--text-secondary, #666);
     }
 
     /* Timeline container */
@@ -112,7 +115,15 @@
         position: relative;
         display: flex;
         align-items: flex-start;
+        outline: none;
+        cursor: default;
+        transition: transform 0.2s ease;
     }
+
+        .timeline-item:focus,
+        .timeline-item:hover {
+            transform: translateX(5px);
+        }
 
     /* Circle marker on the timeline */
     .timeline-marker {
@@ -123,43 +134,43 @@
         height: 18px;
         background-color: #0078d4;
         border-radius: 50%;
-        border: 3px solid white;
-        box-shadow: 0 0 5px rgba(0,120,212,0.6);
+        border: 3px solid var(--bg);
+        box-shadow: 0 0 8px rgba(0,120,212,0.7);
         z-index: 2;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     /* Experience card */
     .experience-card {
         background-color: var(--card-bg);
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 1.25rem;
         border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         width: 100%;
         max-width: 600px;
         text-align: left;
-        margin-left: 40px; /* space from timeline */
+        margin-left: 40px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+
+    .timeline-item:hover .experience-card {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     }
 
     .timeline-date {
         font-weight: 600;
-        color: #555;
+        color: var(--text-secondary, #555);
         margin-bottom: 0.5rem;
         font-size: 0.9rem;
-    }
-
-    .experience-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 6px;
-        margin-bottom: 1rem;
+        font-family: monospace;
     }
 
     .company-name {
         font-weight: 500;
-        color: #555;
+        color: var(--text-secondary, #555);
         margin-top: -0.3rem;
         margin-bottom: 0.8rem;
         font-size: 1rem;
@@ -172,16 +183,20 @@
 
     .experience-card p {
         margin: 0.25rem 0;
+        line-height: 1.4;
     }
 
     .experience-card a {
         color: #0078d4;
         font-weight: 600;
         text-decoration: none;
+        transition: color 0.3s ease;
     }
 
-        .experience-card a:hover {
+        .experience-card a:hover,
+        .experience-card a:focus {
             text-decoration: underline;
+            color: #005fa3;
         }
 
     /* Responsive adjustments */
@@ -190,11 +205,13 @@
 
     {
         padding: 0 1rem;
+        margin: 2rem auto;
     }
 
     .experience-card {
         max-width: 100%;
         margin-left: 35px;
+        padding: 1.25rem 1rem;
     }
 
     .timeline-line {

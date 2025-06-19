@@ -9,8 +9,15 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li class="theme-toggle-mobile">
+            <ThemeToggle />
+        </li>
     </ul>
-    <ThemeToggle />
+
+    <!-- Theme toggle for desktop (optional) -->
+    <div class="theme-toggle-desktop">
+        <ThemeToggle />
+    </div>
 </nav>
 
 <style>
@@ -40,17 +47,14 @@
         padding: 0;
         margin: 0;
         flex-grow: 1;
+        align-items: center;
     }
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-color);
+            color: var(--text-primary);
             font-weight: 500;
         }
-
-    .ThemeToggle {
-        flex-shrink: 0;
-    }
 
     /* Hide checkbox and hamburger menu by default */
     .nav-toggle {
@@ -68,7 +72,7 @@
         .nav-toggle-label span::before,
         .nav-toggle-label span::after {
             content: '';
-            background: var(--text-color);
+            background: var(--text-primary);
             height: 2px;
             width: 25px;
             display: block;
@@ -86,9 +90,21 @@
                 top: 8px;
             }
 
-    /* Responsive styles for smaller screens */
+    /* Theme toggle desktop (hidden on small screens) */
+    .theme-toggle-desktop {
+        flex-shrink: 0;
+    }
+
+    /* Hide mobile theme toggle on desktop */
+    .theme-toggle-mobile {
+        display: none;
+    }
+
+    /* Responsive styles */
     @@media (max-width: 768px) {
-        .nav{
+        .nav
+
+    {
         flex-direction: row;
         align-items: center;
     }
@@ -102,18 +118,32 @@
         top: 100%;
         left: 0;
         padding: 20px;
+        gap: 15px;
+        z-index: 998;
     }
 
         .nav-links li {
             margin: 10px 0;
         }
 
+    /* Show nav links when toggled */
     .nav-toggle:checked + .nav-toggle-label + .nav-links {
         display: flex;
     }
 
+    /* Show hamburger toggle */
     .nav-toggle-label {
         display: flex;
+    }
+
+    /* Hide desktop theme toggle on mobile */
+    .theme-toggle-desktop {
+        display: none;
+    }
+
+    /* Show theme toggle inside mobile menu */
+    .theme-toggle-mobile {
+        display: block;
     }
 
     }
