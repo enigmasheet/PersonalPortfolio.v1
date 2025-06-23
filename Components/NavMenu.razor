@@ -1,24 +1,23 @@
 ﻿<nav class="nav">
     <div class="logo"><a href="#hero">Abhay</a></div>
+
     <input type="checkbox" id="nav-toggle" class="nav-toggle" />
     <label for="nav-toggle" class="nav-toggle-label">
         <span></span>
     </label>
+
     <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li class="theme-toggle-mobile">
-            <ThemeToggle />
-        </li>
     </ul>
 
-    <!-- Theme toggle for desktop (optional) -->
     <div class="theme-toggle-desktop">
         <ThemeToggle />
     </div>
 </nav>
+
 
 <style>
     .nav {
@@ -56,7 +55,6 @@
             font-weight: 500;
         }
 
-    /* Hide checkbox and hamburger menu by default */
     .nav-toggle {
         display: none;
     }
@@ -90,20 +88,13 @@
                 top: 8px;
             }
 
-    /* Theme toggle desktop (hidden on small screens) */
     .theme-toggle-desktop {
         flex-shrink: 0;
     }
 
-    /* Hide mobile theme toggle on desktop */
-    .theme-toggle-mobile {
-        display: none;
-    }
 
-    /* Responsive styles */
     @@media (max-width: 768px) {
         .nav
-
     {
         flex-direction: row;
         align-items: center;
@@ -126,22 +117,18 @@
             margin: 10px 0;
         }
 
-    /* Show nav links when toggled */
     .nav-toggle:checked + .nav-toggle-label + .nav-links {
         display: flex;
     }
 
-    /* Show hamburger toggle */
     .nav-toggle-label {
         display: flex;
     }
 
-    /* Hide desktop theme toggle on mobile */
     .theme-toggle-desktop {
         display: none;
     }
 
-    /* Show theme toggle inside mobile menu */
     .theme-toggle-mobile {
         display: block;
     }
