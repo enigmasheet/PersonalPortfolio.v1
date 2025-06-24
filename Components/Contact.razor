@@ -1,45 +1,58 @@
-﻿<section id="contact" class="contact-section">
-    <h2 class="section-title">Get In Touch</h2>
-    <p class="contact-description">If you'd like to connect, feel free to email me anytime.</p>
-    <a href="mailto:abhaymandal321@gmail.com" class="contact-link">
-        Say Hello
-    </a>
-</section>
+﻿    <section id="contact" class="contact-section">
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="contact-description">
+            Have a question or just want to say hello?<br />
+            Drop me an email at
+            <a href="mailto:info@abhaymandal.com.np" aria-label="Email Abhay Mandal"><strong>info@abhaymandal.com.np</strong></a>.
+        </p>
+    <a href="mailto:info@abhaymandal.com.np" class="contact-link" role="button" tabindex="0">
+        Say Hello 
+        </a>
+    </section>
 
-<style>
-    .contact-section {
-        max-width: 700px;
-        margin: 3rem auto;
-        padding: 0 2rem;
-        text-align: center;
-        color: var(--text-primary);
-    }
-
-    .section-title {
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-    }
-
-    .contact-description {
-        font-size: 1.125rem;
-        margin-bottom: 2rem;
-        color: var(--text-secondary);
-    }
-
-    .contact-link {
-        text-decoration: none;
-        background-color: var(--btn-bg);
-        color: var(--btn-text);
-        padding: 0.75rem 2rem;
-        font-size: 1rem;
-        border-radius: 4px;
-        cursor: pointer;
-        display: inline-block;
-        transition: background-color 0.3s ease;
-    }
-
-        .contact-link:hover {
-            background-color: var(--btn-bg-hover);
+    <style>
+        .contact-section {
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            text-align: center;
+            color: var(--text-primary);
         }
-</style>
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .contact-description {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-link {
+            text-decoration: none;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block; /* ✅ keep this */
+            width: fit-content;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+
+            .contact-link:focus {
+                outline: 2px solid var(--btn-bg-hover);
+                outline-offset: 4px;
+            }
+
+            .contact-link:hover {
+                background-color: var(--btn-bg-hover);
+                color: var(--btn-text);
+            }
+    </style>
