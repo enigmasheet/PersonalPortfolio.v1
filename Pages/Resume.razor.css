@@ -1,0 +1,19 @@
+.resume-card { max-width: 900px; margin: 0 auto; }
+.fw-600 { font-weight: 600; }
+.font-italic { font-style: italic; }
+.text-nowrap { white-space: nowrap; }
+.mud-resume-links { list-style: none; padding: 0; }
+.mud-resume-links li { margin-bottom: 6px; }
+@media (max-width: 700px) {
+    .resume-card { padding: 24px !important; }
+    .d-flex.justify-space-between { flex-direction: column; }
+}
+@media print {
+    @page { margin: 0.6in 0.5in; }
+    .mud-appbar-custom, .mud-drawer, .mud-back-to-top, .mud-footer-custom { display: none !important; }
+    .mud-main-content { padding-top: 0 !important; }
+    .page-section { padding: 0 !important; }
+    .resume-card { box-shadow: none !important; border: none !important; padding: 0 !important; }
+    .d-flex.gap-3.justify-end { display: none !important; }
+    body { background: #fff !important; color: #000 !important; font-size: 11pt !important; }
+}

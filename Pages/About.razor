@@ -1,0 +1,181 @@
+@page "/about"
+
+<SeoMeta Title="@Seo.PageTitle("About")"
+         Description="@(_content?.Sections?["about"]?.Description ?? Seo.DefaultDescription)" />
+
+<MudContainer Class="page-section">
+    <SectionHeader Label="@_content?.Sections?["about"]?.Label"
+                   Title="@_content?.Sections?["about"]?.Title"
+                   Description="@_content?.Sections?["about"]?.Description" />
+
+    <div data-reveal class="about-content mb-8">
+        @{
+            var paragraphs = _content?.About?.Paragraphs;
+            if (paragraphs != null)
+            {
+                foreach (var p in paragraphs)
+                {
+                    <MudText Typo="Typo.body1" Class="text-secondary mb-4" Style="line-height:1.8;font-size:1.05rem;">@p</MudText>
+                }
+            }
+        }
+    </div>
+
+    <div data-reveal>
+        <MudPaper Class="pa-6 mb-8" Elevation="0" Outlined="true">
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">@(_content?.About?.BlockTitles?.Skills ?? "Skills & Technologies")</MudText>
+            @if (_skills != null)
+            {
+                <MudGrid>
+                    @foreach (var category in _skills)
+                    {
+                        <MudItem @key="category.Category" xs="12" md="6" Class="mb-4">
+                            <MudText Typo="Typo.subtitle2" Align="Align.Center" Class="text-secondary mb-2" Style="text-transform:uppercase;letter-spacing:1px;font-family:'JetBrains Mono',monospace;">
+                                @category.Category
+                            </MudText>
+                            <div class="d-flex flex-wrap justify-center gap-1 mb-2">
+                                @foreach (var skill in category.Skills)
+                                {
+                                    <MudChip @key="skill" T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@skill</MudChip>
+                                }
+                            </div>
+                        @if (category.Level > 0)
+                        {
+                            <div class="skill-bar-track" style="--progress: @(category.Level)%">
+                                <div class="skill-bar-fill"></div>
+                            </div>
+                        }
+                        </MudItem>
+                    }
+                </MudGrid>
+            }
+            else
+            {
+                <Skeleton Type="text" Lines="3" />
+            }
+        </MudPaper>
+    </div>
+
+    <div data-reveal>
+        <MudPaper Class="pa-6 mb-8" Elevation="0" Outlined="true">
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">@(_content?.About?.BlockTitles?.Certifications ?? "Certifications")</MudText>
+            @if (_certifications != null && _certifications.Any())
+            {
+                <MudGrid>
+                    @foreach (var cert in _certifications)
+                    {
+                        <MudItem @key="cert.Title" xs="12" sm="6" md="4">
+                            <a href="@cert.Link" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:block;">
+                                <MudCard Class="mb-4" Outlined="true" Style="cursor:pointer;">
+                                    <MudCardContent>
+                                        <MudText Typo="Typo.subtitle2">@cert.Title</MudText>
+                                        <MudText Typo="Typo.body2" Class="text-secondary">@cert.Issuer</MudText>
+                                    </MudCardContent>
+                                </MudCard>
+                            </a>
+                        </MudItem>
+                    }
+                </MudGrid>
+            }
+            else if (_certifications != null && !_certifications.Any())
+            {
+                <MudText Align="Align.Center" Class="text-secondary">No certifications yet.</MudText>
+            }
+            else
+            {
+                <Skeleton Type="card" Count="2" />
+            }
+        </MudPaper>
+    </div>
+
+    <div data-reveal>
+        <MudPaper Class="pa-6 mb-8" Elevation="0" Outlined="true">
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">@(_content?.About?.BlockTitles?.Achievements ?? "Achievements")</MudText>
+            <div class="achievements-timeline">
+                @{
+                    var achievements = _content?.About?.Achievements;
+                    if (achievements != null)
+                    {
+                        foreach (var a in achievements)
+                        {
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <MudPaper Class="pa-4 mb-4" Elevation="0" Outlined="true">
+                                    <MudText Typo="Typo.caption" Color="Color.Primary" Style="font-family:'JetBrains Mono',monospace;">@a.Year</MudText>
+                                    <MudText Typo="Typo.subtitle1">@a.Title</MudText>
+                                    <MudText Typo="Typo.body2" Class="text-secondary">@a.Description</MudText>
+                                </MudPaper>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </MudPaper>
+    </div>
+
+    <div data-reveal>
+        <MudPaper Class="pa-6 mb-8" Elevation="0" Outlined="true">
+            <MudText Typo="Typo.h5" Align="Align.Center" Class="mb-4">@(_content?.About?.BlockTitles?.Testimonials ?? "Testimonials")</MudText>
+            @if (_testimonials != null && _testimonials.Any())
+            {
+                <MudGrid>
+                    @foreach (var t in _testimonials)
+                    {
+                        <MudItem @key="t.Name" xs="12" sm="6">
+                            <MudCard Class="mb-4" Outlined="true">
+                                <MudCardContent>
+                                    <MudText Typo="Typo.body1" Class="font-italic text-secondary mb-3" Style="line-height:1.6;">"@t.Text"</MudText>
+                                    <MudText Typo="Typo.subtitle2">@t.Name</MudText>
+                                    @if (!string.IsNullOrWhiteSpace(t.Role))
+                                    {
+                                        <MudText Typo="Typo.body2" Class="text-secondary">— @t.Role</MudText>
+                                    }
+                                </MudCardContent>
+                            </MudCard>
+                        </MudItem>
+                    }
+                </MudGrid>
+            }
+            else if (_testimonials != null && !_testimonials.Any())
+            {
+                <MudText Align="Align.Center" Class="text-secondary">No testimonials yet.</MudText>
+            }
+            else
+            {
+                <Skeleton Type="card" Count="1" />
+            }
+        </MudPaper>
+    </div>
+
+    <div data-reveal>
+        <MudGrid Class="mb-8">
+            @{
+                var stats = _content?.About?.Stats;
+                if (stats != null)
+                {
+                    foreach (var s in stats)
+                    {
+                    <MudItem xs="6" md="3">
+                        <MudPaper Class="stat-tile pa-4 text-center" Elevation="0" Outlined="true">
+                            <MudText Typo="Typo.h3" Color="Color.Primary" Class="counter" data-target="@s.Target" data-suffix="@s.Suffix">0</MudText>
+                            <MudText Typo="Typo.body2" Class="text-secondary">@s.Label</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    }
+                }
+            }
+        </MudGrid>
+    </div>
+
+    <div data-reveal>
+    <MudPaper Class="pa-6 text-center mb-8 quote-card" Elevation="0" Outlined="true" Style="position:relative;">
+        <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+        <MudText Typo="Typo.h5" Class="font-italic quote-text text-secondary">@(_content?.About?.Quote ?? "Code should not only work — it should inspire.")</MudText>
+    </MudPaper>
+    </div>
+
+    <div data-reveal class="text-center">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/projects">Explore My Projects &rarr;</MudButton>
+    </div>
+</MudContainer>
+

@@ -1,0 +1,23 @@
+﻿<section class="hero-section">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <MudContainer Class="hero-content">
+        <MudText Typo="Typo.caption" Class="hero-label">@(_content?.Hero?.Greeting ?? "Hi, I'm")</MudText>
+        <MudText Typo="Typo.h1" Class="hero-name">@(_content?.Site?.FullName ?? "Abhay Kumar Mandal")</MudText>
+        <MudText Typo="Typo.h4" Class="hero-title">
+            <span data-typing data-phrases="@_phrases" data-speed="80" data-delete-speed="40" data-pause="2500" data-delay="1200">@_firstPhrase</span>
+        </MudText>
+        <MudText Typo="Typo.body1" Class="hero-desc">
+            @(_content?.Hero?.Description ?? "Building modern web applications with .NET, JavaScript, and cloud technologies.")
+        </MudText>
+        <div class="hero-actions">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Href="/#projects" Class="hero-btn">
+                @(_content?.Hero?.PrimaryCta ?? "View Projects")
+            </MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Large" Href="/#contact" Class="hero-btn">
+                @(_content?.Hero?.SecondaryCta ?? "Get In Touch")
+            </MudButton>
+        </div>
+    </MudContainer>
+</section>
+

@@ -1,0 +1,89 @@
+@page "/resume"
+
+<SeoMeta Title="@Seo.PageTitle("Resume")"
+         Description="@_resumeDescription" />
+
+<div data-reveal><MudContainer Class="page-section" MaxWidth="MaxWidth.Medium">
+    <div class="d-flex gap-3 justify-end mb-6">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="@SiteConfig.ResumePath" Target="_blank" StartIcon="@Icons.Material.Filled.Download">Download PDF</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Print" OnClick="Print">Print</MudButton>
+    </div>
+
+    <MudPaper Class="pa-8 resume-card" Elevation="0" Outlined="true" id="resume-content">
+        <div class="text-center pb-6 mb-6" Style="border-bottom:2px solid var(--mud-palette-primary);">
+            <MudText Typo="Typo.h3" Class="mb-1">@(_content?.Site?.FullName ?? "Abhay Kumar Mandal")</MudText>
+            <MudText Typo="Typo.subtitle1" Class="text-secondary mb-3">@(_content?.Site?.Title ?? "Backend Software Developer & Product-Oriented Technologist")</MudText>
+            <div class="d-flex flex-wrap justify-center gap-1 text-secondary" Style="font-size:0.82rem;">
+                <span>@(_content?.Resume?.Location ?? "Kathmandu, Nepal")</span>
+                <span>|</span>
+                <span>@SiteConfig.Email</span>
+                <span>|</span>
+                <span>github.com/@SiteConfig.GitHubUsername</span>
+                <span>|</span>
+                <span>@SiteConfig.Domain</span>
+            </div>
+        </div>
+
+        <MudGrid>
+            <MudItem xs="12" md="8">
+                <MudText Typo="Typo.overline" Color="Color.Primary" Class="mb-4" Style="text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--mud-palette-tablelines);padding-bottom:6px;">Experience</MudText>
+                @if (_experiences != null && _experiences.Any())
+                {
+                    @foreach (var exp in _experiences.OrderByDescending(e => e.Date))
+                    {
+                        <div @key="exp.Title" class="mb-4">
+                            <div class="d-flex justify-space-between align-baseline gap-3">
+                                <MudText Typo="Typo.subtitle1" Class="fw-600">@exp.Title</MudText>
+                                <MudText Typo="Typo.caption" Class="text-secondary text-nowrap" Style="font-family:'JetBrains Mono',monospace;">
+                                    @DateExtensions.ToDisplayDateRange(exp.Date, exp.EndDate)
+                                </MudText>
+                            </div>
+                            <MudText Typo="Typo.body2" Class="font-italic text-secondary mb-1">@exp.Company</MudText>
+                            <MudText Typo="Typo.body2" Class="text-secondary" Style="line-height:1.6;">@exp.Description</MudText>
+                        </div>
+                    }
+                }
+
+                <MudText Typo="Typo.overline" Color="Color.Primary" Class="mb-4 mt-6" Style="text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--mud-palette-tablelines);padding-bottom:6px;">Education</MudText>
+                @{
+                    var education = _content?.Resume?.Education;
+                    if (education != null)
+                    {
+                        foreach (var edu in education)
+                        {
+                            <div class="mb-4">
+                                <div class="d-flex justify-space-between align-baseline gap-3">
+                                    <MudText Typo="Typo.subtitle1" Class="fw-600">@edu.Degree</MudText>
+                                    <MudText Typo="Typo.caption" Class="text-secondary text-nowrap">@edu.Dates</MudText>
+                                </div>
+                                <MudText Typo="Typo.body2" Class="font-italic text-secondary">@edu.School</MudText>
+                            </div>
+                        }
+                    }
+                }
+            </MudItem>
+
+            <MudItem xs="12" md="4">
+                <MudText Typo="Typo.overline" Color="Color.Primary" Class="mb-4" Style="text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--mud-palette-tablelines);padding-bottom:6px;">Skills</MudText>
+                @if (_skills != null)
+                {
+                    @foreach (var category in _skills)
+                    {
+                        <div @key="category.Category" class="mb-3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">@category.Category</MudText>
+                            <MudText Typo="Typo.body2" Class="text-secondary">@string.Join(", ", category.Skills)</MudText>
+                        </div>
+                    }
+                }
+
+                <MudText Typo="Typo.overline" Color="Color.Primary" Class="mb-4 mt-4" Style="text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid var(--mud-palette-tablelines);padding-bottom:6px;">Links</MudText>
+                <ul class="mud-resume-links">
+                    <li><MudLink Href="@SiteConfig.GitHubUrl" Target="_blank">GitHub</MudLink></li>
+                    <li><MudLink Href="@SiteConfig.LinkedInUrl" Target="_blank">LinkedIn</MudLink></li>
+                    <li><MudLink Href="/blog">Blog</MudLink></li>
+                </ul>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+    </MudContainer></div>
+

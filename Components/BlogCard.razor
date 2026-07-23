@@ -1,0 +1,25 @@
+<MudCard Outlined="true" Class="blog-card" tabindex="0" role="article" aria-label="@($"View blog post: {Title}")"
+         @onclick="Navigate" @onkeydown="HandleKeyDown" Style="cursor:pointer;">
+    <MudCardContent>
+        <div class="d-flex align-center gap-2 mb-2">
+            <span class="blog-date-badge">@Date.ToDisplayDate()</span>
+            @if (_readingTime > 0)
+            {
+                <MudText Typo="Typo.caption" Class="text-secondary">·</MudText>
+                <MudText Typo="Typo.caption" Class="text-secondary">@_readingTime min read</MudText>
+            }
+        </div>
+        <MudText Typo="Typo.h5" Class="blog-card-title mb-1">@Title</MudText>
+        <MudText Typo="Typo.body2" Class="text-secondary mb-3" Style="line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">@Summary</MudText>
+        @if (Tags is { Count: > 0 })
+        {
+            <div class="d-flex flex-wrap gap-1">
+                @foreach (var tag in Tags)
+                {
+                    <MudChip @key="tag" T="string" Size="Size.Small" Color="Color.Secondary" Variant="Variant.Outlined">@tag</MudChip>
+                }
+            </div>
+        }
+    </MudCardContent>
+</MudCard>
+

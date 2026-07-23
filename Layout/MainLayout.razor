@@ -1,0 +1,54 @@
+﻿<MudLayout>
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <MudAppBar Elevation="0" Class="mud-appbar-custom" Style="backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" @onclick="ToggleDrawer" Class="d-flex d-sm-none" />
+        <MudText Typo="Typo.h6" Class="flex-grow-1 ms-2">@_siteName</MudText>
+        <div class="d-none d-sm-flex gap-1">
+            @for (int i = 0; i < _navPaths.Length; i++)
+            {
+                var link = i < _navLinks.Count ? _navLinks[i] : "";
+                var active = IsActive(_navPaths[i]);
+                <MudButton Href="@_navPaths[i]" Color="Color.Inherit"
+                           Class="@($"mud-nav-link-custom {(active ? "mud-nav-link-active" : "")}")">
+                    @link
+                </MudButton>
+            }
+        </div>
+        <MudText Class="mud-cmd-hint d-none d-md-flex">Cmd+K</MudText>
+        <MudIconButton Icon="@(Theme.IsDark ? Icons.Material.Filled.DarkMode : Icons.Material.Filled.LightMode)"
+                       Color="Color.Inherit" @onclick="ToggleTheme" aria-label="Toggle theme" />
+    </MudAppBar>
+
+    <MudDrawer @bind-Open="_drawerOpen" Variant="@DrawerVariant.Temporary" Anchor="@Anchor.Left">
+        <MudNavMenu>
+            @for (int i = 0; i < _navPaths.Length; i++)
+            {
+                var link = i < _navLinks.Count ? _navLinks[i] : "";
+                var active = IsActive(_navPaths[i]);
+                <MudButton Href="@_navPaths[i]" Color="Color.Inherit" FullWidth="true" @onclick="CloseDrawer"
+                           Class="@($"mud-nav-link-custom mud-drawer-link {(active ? "mud-nav-link-active" : "")}")">
+                    @link
+                </MudButton>
+            }
+        </MudNavMenu>
+        <MudDivider />
+        <SocialLinks Size="Size.Medium" Spacing="4" Class="justify-space-around pa-4" />
+    </MudDrawer>
+
+    <MudMainContent id="main-content" role="main" Class="pt-16 pb-16" tabindex="-1">
+        <CommandPalette />
+        <div class="page-transition">@Body</div>
+        <MudFab Color="Color.Primary" Class="mud-back-to-top" OnClick="ScrollToTop" Size="Size.Small" aria-label="Back to top"
+                StartIcon="@Icons.Material.Filled.KeyboardArrowUp" />
+    </MudMainContent>
+
+    <footer class="mud-footer-custom">
+        <MudContainer>
+            <div class="d-flex flex-column align-center py-6 gap-4">
+                <SocialLinks Size="Size.Medium" Spacing="4" />
+                <MudText Typo="Typo.body2" Class="text-secondary">@_copyright</MudText>
+            </div>
+        </MudContainer>
+    </footer>
+</MudLayout>
+

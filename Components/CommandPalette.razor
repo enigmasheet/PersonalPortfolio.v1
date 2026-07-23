@@ -1,0 +1,41 @@
+<MudOverlay @bind-Visible="_isOpen" Absolute="true" Class="cmd-backdrop" />
+<MudPaper Class="@(_isOpen ? "cmd-modal cmd-open" : "cmd-modal")" Elevation="8">
+    <div class="cmd-header">
+        <MudIcon Icon="@Icons.Material.Filled.Search" Size="Size.Small" Class="cmd-icon" />
+        <input type="text" class="cmd-input" placeholder="Search projects and blog posts..."
+               @ref="_searchInput" @bind="@_query" @bind:event="oninput" @onkeydown="HandleKey" />
+        <MudText Typo="Typo.caption" Class="cmd-hint">ESC to close</MudText>
+    </div>
+    <div class="cmd-body">
+        @if (!_dataLoaded)
+        {
+            <MudText Typo="Typo.body2" Class="cmd-muted">Loading...</MudText>
+        }
+        else if (string.IsNullOrWhiteSpace(_query))
+        {
+            <MudText Typo="Typo.body2" Class="cmd-muted">Start typing to search...</MudText>
+        }
+        else if (!_results.Any())
+        {
+            <MudText Typo="Typo.body2" Class="cmd-muted">No results found.</MudText>
+        }
+        else
+        {
+            @foreach (var group in _results)
+            {
+                <MudText @key="@group.Key" Typo="Typo.caption" Class="cmd-group">@group.Key</MudText>
+                @foreach (var item in group)
+                {
+                    <div @key="item.Url" class="cmd-item @(item == _selectedItem ? "selected" : "")"
+                         @onclick="() => NavigateTo(item.Url)"
+                         @onmouseenter="() => SelectItem(item)"
+                         tabindex="0">
+                        <MudText Typo="Typo.body2">@item.Title</MudText>
+                        <MudText Typo="Typo.caption" Class="text-secondary">@item.Subtitle</MudText>
+                    </div>
+                }
+            }
+        }
+    </div>
+</MudPaper>
+

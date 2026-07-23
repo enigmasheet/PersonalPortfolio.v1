@@ -1,0 +1,16 @@
+<MudContainer Class="not-found-section">
+    <div class="not-found-icon-wrap">
+        <MudIcon Icon="@(IsError ? Icons.Material.Filled.ErrorOutline : Icons.Material.Filled.SearchOff)" Size="Size.Large" Color="@(IsError ? Color.Error : Color.Primary)" />
+    </div>
+    <MudText Typo="Typo.h2" Color="@(IsError ? Color.Error : Color.Primary)" Class="not-found-heading">@Heading</MudText>
+    <MudText Typo="Typo.h5" Class="not-found-subheading">@SubHeading</MudText>
+    <MudText Typo="Typo.body1" Class="text-secondary not-found-desc">@Description</MudText>
+    <div class="d-flex gap-4 flex-wrap justify-center">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="@BackLink">@BackText</MudButton>
+        @if (ShowReload)
+        {
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="Reload">Reload</MudButton>
+        }
+    </div>
+</MudContainer>
+

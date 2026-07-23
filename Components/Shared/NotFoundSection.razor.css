@@ -1,0 +1,31 @@
+.not-found-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 96px 24px;
+    text-align: center;
+}
+.not-found-icon-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--mud-palette-primary-hover);
+    margin-bottom: 24px;
+}
+.not-found-heading {
+    margin-bottom: 8px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+.not-found-subheading {
+    margin-bottom: 8px;
+}
+.not-found-desc {
+    max-width: 480px;
+    margin-bottom: 32px;
+    line-height: 1.7;
+}

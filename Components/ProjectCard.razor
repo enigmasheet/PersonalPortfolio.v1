@@ -1,0 +1,101 @@
+﻿<MudCard @ref="_cardRef" tabindex="0" role="article" aria-label="@Title"
+       Outlined="true" Class="project-card mud-elevation-1"
+       @onclick="NavigateToDetail"
+       @onkeydown="HandleKeyDown"
+       Style="cursor:pointer;">
+    <div class="card-image-wrap" style="position:relative;">
+        @if (_images is { Count: > 0 })
+        {
+            <div class="image-slider" style="position:relative;overflow:hidden;">
+                @if (_images.Count > 1)
+                {
+                    <button class="slider-btn slider-prev" @onclick="PrevImage" @onclick:stopPropagation="true" aria-label="Previous image">
+                        <MudIcon Icon="@Icons.Material.Filled.ChevronLeft" Size="Size.Small" />
+                    </button>
+                }
+                <img src="@_images[_currentImage]"
+                     alt="@($"{Title} screenshot {_currentImage + 1}")"
+                     class="card-img"
+                     loading="lazy"
+                     style="width:100%;object-fit:cover;display:block;aspect-ratio:16/10;max-height:240px;"
+                     @onerror="HandleImageError" />
+                <div class="card-img-overlay">
+                    @if (Technologies is { Count: > 0 })
+                    {
+                        <div class="d-flex flex-wrap justify-center gap-1 pa-4">
+                            @foreach (var tech in Technologies.Take(4))
+                            {
+                                <MudChip @key="tech" T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Filled">@tech</MudChip>
+                            }
+                            @if (Technologies.Count > 4)
+                            {
+                                <MudChip T="string" Size="Size.Small" Variant="Variant.Filled" Color="Color.Primary"
+                                         aria-label="@($"Additional {Technologies.Count - 4} technologies")">
+                                    +@(Technologies.Count - 4)
+                                </MudChip>
+                            }
+                        </div>
+                    }
+                </div>
+                @if (_images.Count > 1)
+                {
+                    <button class="slider-btn slider-next" @onclick="NextImage" @onclick:stopPropagation="true" aria-label="Next image">
+                        <MudIcon Icon="@Icons.Material.Filled.ChevronRight" Size="Size.Small" />
+                    </button>
+                    <MudText Typo="Typo.caption" Class="img-counter">@(_currentImage + 1) / @_images.Count</MudText>
+                }
+            </div>
+        }
+        else
+        {
+            <div style="width:100%;aspect-ratio:16/10;max-height:240px;background:var(--mud-palette-tablelines);display:flex;align-items:center;justify-content:center;">
+                <MudIcon Icon="@Icons.Material.Filled.Image" Size="Size.Large" Class="text-secondary" />
+            </div>
+        }
+    </div>
+
+    <MudCardContent>
+        <MudText Typo="Typo.h5" Class="mb-1">@Title</MudText>
+        <MudText Typo="Typo.body2" Class="text-secondary mb-3" Style="line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">@Description</MudText>
+
+        @if (Technologies is { Count: > 0 })
+        {
+            <div class="d-flex flex-wrap gap-1 mb-3">
+                @foreach (var tech in Technologies)
+                {
+                    <MudChip @key="tech" T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@tech</MudChip>
+                }
+            </div>
+        }
+
+        @if (Tags is { Count: > 0 })
+        {
+            <div class="d-flex flex-wrap gap-1 mb-3">
+                @foreach (var tag in Tags)
+                {
+                    <MudChip @key="tag" T="string" Size="Size.Small" Variant="Variant.Text" Class="text-secondary" Style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;">@tag</MudChip>
+                }
+            </div>
+        }
+    </MudCardContent>
+
+    <MudCardActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Href="@($"/projects/{Slug}")" @onclick:stopPropagation="true">Details</MudButton>
+        @if (!string.IsNullOrWhiteSpace(GitHubLink))
+        {
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Small" Href="@GitHubLink" Target="_blank" @onclick:stopPropagation="true">Source</MudButton>
+        }
+        @if (!string.IsNullOrWhiteSpace(LiveDemo))
+        {
+            if (LiveDemoActive)
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Href="@LiveDemo" Target="_blank" Class="flex-grow-1" @onclick:stopPropagation="true">Live Demo</MudButton>
+            }
+            else
+            {
+                <MudButton Variant="Variant.Outlined" Color="Color.Default" Size="Size.Small" Disabled="true" Class="flex-grow-1">Offline</MudButton>
+            }
+        }
+    </MudCardActions>
+</MudCard>
+

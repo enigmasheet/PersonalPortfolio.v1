@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- InvariantGlobalization + no timezone keeps the WASM payload small.
+         If you ever localize dates/currency for non-en-US, remove these. -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
+    <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+
+    <!-- Trimming disabled for GitHub Pages deployment reliability -->
+    <PublishTrimmed>false</PublishTrimmed>
+
+    <!-- AOT: faster runtime, bigger download. Benchmark before enabling. -->
+    <RunAOTCompilation>false</RunAOTCompilation>
+
+    <!-- Brotli/gzip compression of the WASM payload -->
+    <CompressionEnabled>true</CompressionEnabled>
+    <NoWarn>NU1902</NoWarn>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="9.0.967" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.10" PrivateAssets="all" />
+    <PackageReference Include="MudBlazor" Version="9.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\data\projects.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\404.html">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\og-image.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\data\site-content.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,15 @@
+<div class="section-header @(Centered ? "section-header-centered" : "")" data-reveal>
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <MudText Typo="Typo.caption" Class="text-secondary section-label">@Label</MudText>
+    }
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <MudText Typo="Typo.h3" Class="@_titleClass">@Title</MudText>
+    }
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <MudText Typo="Typo.body1" Class="@_descClass">@Description</MudText>
+    }
+</div>
+

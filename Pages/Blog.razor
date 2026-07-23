@@ -1,0 +1,50 @@
+@page "/blog"
+
+<SeoMeta Title="@Seo.PageTitle("Blog")"
+         Description="@(_content?.Sections?["blog"]?.Description ?? Seo.DefaultDescription)" />
+
+<div data-reveal><MudPaper Class="page-section" Elevation="0" Outlined="true" Square="true">
+    <MudContainer MaxWidth="MaxWidth.Small">
+        <SectionHeader Label="@_content?.Sections?["blog"]?.Label"
+                       Title="@_content?.Sections?["blog"]?.Title"
+                       Description="@_content?.Sections?["blog"]?.Description" />
+
+        @if (_posts == null)
+        {
+            <Skeleton Type="card" Count="3" />
+        }
+        else if (!_posts.Any())
+        {
+            <MudText Align="Align.Center" Class="text-secondary py-8">No posts yet. Check back soon!</MudText>
+        }
+        else
+        {
+            <div class="d-flex flex-wrap justify-center gap-1 mb-6">
+                <MudChip T="string" Color="Color.Secondary" Variant="@(_activeTag == null ? Variant.Filled : Variant.Outlined)"
+                         OnClick="() => SetActiveTag(null)">All</MudChip>
+                @foreach (var tag in allTags)
+                {
+                    var count = _posts.Count(p => p.Tags?.Contains(tag, StringComparer.OrdinalIgnoreCase) == true);
+                    <MudChip @key="tag" T="string" Color="Color.Secondary" Variant="@(_activeTag == tag ? Variant.Filled : Variant.Outlined)"
+                             OnClick="() => SetActiveTag(tag)">@tag (@count)</MudChip>
+                }
+            </div>
+
+            <div class="d-flex flex-column gap-4">
+                <Virtualize Items="filteredPosts" ItemSize="220" Context="post">
+                    <BlogCard @key="@post.Slug"
+                              Slug="@post.Slug"
+                              Title="@post.Title"
+                              Summary="@post.Summary"
+                              Date="@post.Date"
+                              Tags="@post.Tags" />
+                </Virtualize>
+            </div>
+        }
+
+        <div class="text-center mt-8">
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Href="/projects">Browse All Projects &rarr;</MudButton>
+        </div>
+    </MudContainer>
+</MudPaper></div>
+

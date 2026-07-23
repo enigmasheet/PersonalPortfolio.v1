@@ -1,0 +1,18 @@
+[
+  {
+    "Slug": "building-scalable-apis-dotnet",
+    "Title": "Building Scalable REST APIs with ASP.NET Core",
+    "Date": "2026-07-15",
+    "Summary": "Patterns and practices for building maintainable, high-performance REST APIs — from clean architecture to efficient data access.",
+    "Tags": ["ASP.NET Core", "API", "Backend", "C#"],
+    "FileName": "blog/building-scalable-apis-dotnet.html"
+  },
+  {
+    "Slug": "building-with-blazor-wasm",
+    "Title": "Building with Blazor WebAssembly",
+    "Date": "2026-07-01",
+    "Summary": "Lessons learned building a SPA with Blazor WebAssembly — architecture, theming, and deployment to Azure Static Web Apps.",
+    "Tags": ["Blazor", "WebAssembly", "Frontend"],
+    "FileName": "blog/building-with-blazor-wasm.html"
+  }
+]

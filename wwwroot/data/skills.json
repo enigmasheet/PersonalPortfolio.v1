@@ -1,0 +1,27 @@
+[
+  {
+    "Category": "Frontend",
+    "Skills": ["Blazor", "React", "Next.js", "HTML5", "CSS3", "JavaScript", "Tailwind CSS"],
+    "Level": 85
+  },
+  {
+    "Category": "Backend",
+    "Skills": [".NET", "ASP.NET Core", "C#", "REST APIs", "MVC", "Web API"],
+    "Level": 92
+  },
+  {
+    "Category": "Database",
+    "Skills": ["SQL Server", "Entity Framework", "SQLite", "Dapper"],
+    "Level": 78
+  },
+  {
+    "Category": "Cloud & DevOps",
+    "Skills": ["Azure", "GitHub Actions", "Azure Static Web Apps", "CI/CD"],
+    "Level": 75
+  },
+  {
+    "Category": "Tools & Practices",
+    "Skills": ["Git", "Clean Architecture", "Product Management", "Agile"],
+    "Level": 88
+  }
+]

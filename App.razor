@@ -1,0 +1,33 @@
+﻿<MudThemeProvider Theme="AppTheme.Theme" @bind-IsDarkMode="_isDark" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<ErrorBoundary>
+    <ChildContent>
+        <Router AppAssembly="@typeof(Program).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            </Found>
+            <NotFound>
+                <MainLayout>
+                    <MudContainer Class="d-flex flex-column align-center justify-center" Style="min-height:60vh;">
+                        <MudText Typo="Typo.h2" Color="Color.Primary" Class="mb-4">404</MudText>
+                        <MudText Typo="Typo.h5" Class="mb-2">Page not found</MudText>
+                        <MudText Typo="Typo.body1" Class="text-secondary mb-6">The page you're looking for doesn't exist or has been moved.</MudText>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/">Go Home</MudButton>
+                    </MudContainer>
+                </MainLayout>
+            </NotFound>
+        </Router>
+    </ChildContent>
+    <ErrorContent>
+        <MudContainer Class="d-flex flex-column align-center justify-center" Style="min-height:60vh;">
+            <MudText Typo="Typo.h2" Color="Color.Error" Class="mb-4">Oops</MudText>
+            <MudText Typo="Typo.h5" Class="mb-2">Something went wrong</MudText>
+            <MudText Typo="Typo.body1" Class="text-secondary mb-6">An unexpected error occurred. Please try refreshing the page.</MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/">Go Home</MudButton>
+        </MudContainer>
+    </ErrorContent>
+</ErrorBoundary>
+

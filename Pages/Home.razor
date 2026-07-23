@@ -1,0 +1,94 @@
+﻿@page "/"
+
+<SeoMeta Title="@seoTitle"
+         Description="@seoDescription"
+         OgType="website"
+         OgUrl="@SiteConfig.SiteUrl" />
+
+<JsonLd Json='@personJson' />
+
+<Hero />
+
+<div id="overview" data-reveal>
+    <MudContainer Class="page-section text-center">
+        <SectionHeader Label="@_content?.Sections?["overview"]?.Label"
+                       Title="@_content?.Sections?["overview"]?.Title"
+                       Description="@_content?.Sections?["overview"]?.Description" />
+        <div class="d-flex flex-wrap justify-center gap-3 mb-6">
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Href="/about">Learn More About Me</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/projects">@(_content?.Hero?.PrimaryCta ?? "View Projects")</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Href="/contact">@(_content?.Hero?.SecondaryCta ?? "Get In Touch")</MudButton>
+        </div>
+    </MudContainer>
+</div>
+
+<div id="github" data-reveal>
+    <MudPaper Class="page-section" Elevation="0" Outlined="true" Square="true">
+        <MudContainer Class="text-center">
+            <SectionHeader Label="@_content?.Sections?["github"]?.Label"
+                           Title="@_content?.Sections?["github"]?.Title"
+                           Description="@_content?.Sections?["github"]?.Description" />
+            <div class="d-flex flex-wrap justify-center gap-4 mb-4">
+                <MudPaper Class="pa-2" Elevation="0" Outlined="true" Style="border-radius:8px;">
+                    <img src="@SiteConfig.GitHubStatsCardUrl" alt="GitHub Stats" style="max-width:100%;border-radius:6px;display:block;" />
+                </MudPaper>
+                <MudPaper Class="pa-2" Elevation="0" Outlined="true" Style="border-radius:8px;">
+                    <img src="@SiteConfig.GitHubLanguagesCardUrl" alt="Top Languages" style="max-width:100%;border-radius:6px;display:block;" />
+                </MudPaper>
+            </div>
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Href="@SiteConfig.GitHubUrl" Target="_blank">
+                @(_content?.Sections?["github"]?.Cta ?? "View GitHub Profile")
+            </MudButton>
+        </MudContainer>
+    </MudPaper>
+</div>
+
+@if (_testimonials != null && _testimonials.Any())
+{
+    <div id="testimonials" data-reveal>
+        <MudContainer Class="page-section text-center">
+            <SectionHeader Label="@_content?.Sections?["testimonials"]?.Label"
+                           Title="@_content?.Sections?["testimonials"]?.Title"
+                           Description="@_content?.Sections?["testimonials"]?.Description" />
+            <div class="d-flex flex-column gap-4" style="max-width:600px;margin:0 auto;">
+                @foreach (var t in _testimonials.Take(3))
+                {
+                    <MudCard @key="t" Class="pa-6 text-left">
+                        <MudText Typo="Typo.body1" Class="font-italic text-secondary mb-4" Style="line-height:1.7;">"@t.Text"</MudText>
+                        <div class="d-flex align-center gap-3">
+                            <MudAvatar Color="Color.Primary" Size="Size.Medium">@t.Name[0]</MudAvatar>
+                            <div>
+                                <MudText Typo="Typo.subtitle2">@t.Name</MudText>
+                                @if (!string.IsNullOrWhiteSpace(t.Role))
+                                {
+                                    <MudText Typo="Typo.caption" Class="text-secondary">@t.Role</MudText>
+                                }
+                            </div>
+                        </div>
+                    </MudCard>
+                }
+            </div>
+        </MudContainer>
+    </div>
+}
+else if (_testimonials != null && !_testimonials.Any())
+{
+    <div id="testimonials" data-reveal>
+        <MudPaper Class="page-section" Elevation="0" Outlined="true" Square="true">
+            <MudContainer Class="text-center">
+                <SectionHeader Label="@_content?.Sections?["testimonials"]?.Label"
+                               Title="@_content?.Sections?["testimonials"]?.Title"
+                               Description="@_content?.Sections?["testimonials"]?.Description" />
+                <MudText Class="text-secondary py-6">No testimonials yet.</MudText>
+            </MudContainer>
+        </MudPaper>
+    </div>
+}
+
+<div id="about" class="lazy-section">@if (_showAbout) { <About /> }</div>
+<div id="experience" class="lazy-section">@if (_showExperience) { <Experience /> }</div>
+<div id="projects" class="lazy-section">@if (_showProjects) { <Projects /> }</div>
+<div id="blog" class="lazy-section">@if (_showBlog) { <Blog /> }</div>
+<div id="contact" class="lazy-section">@if (_showContact) { <Contact /> }</div>
+<div id="resume" class="lazy-section">@if (_showResume) { <Resume /> }</div>
+

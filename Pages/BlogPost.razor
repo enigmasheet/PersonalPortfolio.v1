@@ -1,0 +1,73 @@
+@page "/blog/{Slug}"
+
+<SeoMeta Title="@(_post?.Title ?? "Blog Post")"
+         Description="@(_post?.Summary ?? "Read a blog post by Abhay Kumar Mandal.")"
+         OgType="article"
+         OgUrl="@($"{SiteConfig.BaseUrl}/blog/{Slug}")" />
+
+<div class="progress-bar" style="position:fixed;top:64px;left:0;z-index:999;height:3px;background:var(--mud-palette-primary);width:0%;"></div>
+
+<MudContainer Class="page-section" MaxWidth="MaxWidth.Small">
+    @if (_loading)
+    {
+        <Skeleton Type="text" Lines="10" />
+    }
+    else if (_notFound)
+    {
+        <div class="text-center py-8">
+            <MudText Typo="Typo.h2" Color="Color.Primary" Class="mb-4">Not found</MudText>
+            <MudText Typo="Typo.body1" Class="text-secondary mb-6">The blog post you're looking for doesn't exist.</MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/blog">Back to Blog</MudButton>
+        </div>
+    }
+    else if (_error)
+    {
+        <div class="text-center py-8">
+            <MudText Typo="Typo.h2" Color="Color.Error" Class="mb-4">Oops</MudText>
+            <MudText Typo="Typo.body1" Class="text-secondary mb-6">Something went wrong loading this post.</MudText>
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="Reload">Reload</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/blog">Back to Blog</MudButton>
+        </div>
+    }
+    else if (_post != null)
+    {
+        <div class="d-flex align-center gap-2 mb-6 flex-wrap">
+            <MudButton Variant="Variant.Text" Color="Color.Primary" Href="/blog" StartIcon="@Icons.Material.Filled.ArrowBack">Back</MudButton>
+        </div>
+
+        <article class="blog-article">
+            @((MarkupString)_htmlContent!)
+        </article>
+
+        @if (_post.Tags is { Count: > 0 })
+        {
+            <div class="d-flex flex-wrap gap-1 mt-6 mb-6">
+                @foreach (var tag in _post.Tags)
+                {
+                    <MudChip @key="tag" T="string" Size="Size.Small" Color="Color.Primary" Variant="Variant.Outlined">@tag</MudChip>
+                }
+            </div>
+        }
+
+        <MudDivider Class="my-6" />
+
+        <div class="d-flex align-center gap-2 mb-6">
+            <MudText Typo="Typo.body2" Class="text-secondary me-2">Share:</MudText>
+            <MudIconButton Href="@SiteConfig.TwitterShareUrl($"Check out this post: {_post.Title}", $"{SiteConfig.BaseUrl}/blog/{Slug}")"
+                           Target="_blank" Icon="@Icons.Custom.Brands.Twitter" Color="Color.Inherit" aria-label="Share on Twitter" />
+            <MudIconButton Href="@SiteConfig.LinkedInShareUrl($"{SiteConfig.BaseUrl}/blog/{Slug}")"
+                           Target="_blank" Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Inherit" aria-label="Share on LinkedIn" />
+            <MudIconButton OnClick="CopyLink" Icon="@Icons.Material.Filled.Link" Color="Color.Inherit" aria-label="Copy link" />
+        </div>
+
+        @if (_linkCopied)
+        {
+            <MudAlert Severity="Severity.Success" Class="mb-4">Link copied to clipboard!</MudAlert>
+        }
+    }
+    else
+    {
+        <Skeleton Type="text" Lines="8" />
+    }
+</MudContainer>
+

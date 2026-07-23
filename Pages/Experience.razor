@@ -1,0 +1,54 @@
+@page "/experience"
+
+<SeoMeta Title="@Seo.PageTitle("Experience")"
+         Description="@(_content?.Sections?["experience"]?.Description ?? Seo.DefaultDescription)" />
+
+<div data-reveal><MudPaper Class="page-section" Elevation="0" Outlined="true" Square="true">
+    <MudContainer MaxWidth="MaxWidth.Small">
+        <SectionHeader Label="@_content?.Sections?["experience"]?.Label"
+                       Title="@_content?.Sections?["experience"]?.Title"
+                       Description="@_content?.Sections?["experience"]?.Description" />
+
+        @if (_experiences == null)
+        {
+            <Skeleton Type="timeline" Count="3" />
+        }
+        else if (!_experiences.Any())
+        {
+            <MudText Align="Align.Center" Class="text-secondary py-8">No experiences found.</MudText>
+        }
+        else
+        {
+            <div data-reveal-stagger="120" class="experience-timeline mt-4">
+                @foreach (var exp in orderedExperiences)
+                {
+                    <div class="d-flex mb-4" @key="exp.Title" data-reveal>
+                        <div class="timeline-dot-wrapper">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-line"></div>
+                        </div>
+                        <MudCard Outlined="true" Class="exp-card flex-grow-1">
+                            <MudCardContent>
+                                <MudText Typo="Typo.caption" Color="Color.Primary" Style="font-family:'JetBrains Mono',monospace;">
+                                    @DateExtensions.ToDisplayDateRange(exp.Date, exp.EndDate)
+                                </MudText>
+                                <MudText Typo="Typo.h5" Class="mt-1 exp-card-title">@exp.Title</MudText>
+                                <MudText Typo="Typo.body2" Class="font-italic text-secondary mb-2">@exp.Company</MudText>
+                                <MudText Typo="Typo.body1" Class="text-secondary">@exp.Description</MudText>
+                                @if (!string.IsNullOrWhiteSpace(exp.Link))
+                                {
+                                    <MudButton Variant="Variant.Text" Color="Color.Primary" Href="@exp.Link" Target="_blank" Class="mt-2">View project &rarr;</MudButton>
+                                }
+                            </MudCardContent>
+                        </MudCard>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="text-center mt-8">
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" Href="/projects">See What I've Built &rarr;</MudButton>
+        </div>
+    </MudContainer>
+</MudPaper></div>
+

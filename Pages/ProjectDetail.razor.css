@@ -1,0 +1,4 @@
+.detail-img { transition: filter 0.2s; }
+.detail-img:hover { filter: brightness(1.05); }
+@media (max-width: 768px) { }
+@media (max-width: 480px) { }

@@ -1,0 +1,26 @@
+<h1>Building Scalable REST APIs with ASP.NET Core</h1>
+<p><em>July 15, 2026</em></p>
+
+<p>Over the past few years, I've built and maintained several production APIs. Here are the patterns and practices that have consistently delivered maintainable, high-performance services.</p>
+
+<h2>Clean Architecture Matters</h2>
+<p>Splitting your application into distinct layers — API, Application, Domain, and Infrastructure — keeps concerns separated and makes your codebase testable and adaptable. The domain layer should have zero external dependencies.</p>
+
+<h2>Efficient Data Access</h2>
+<p>Entity Framework Core is powerful, but raw performance requires attention. Use projection with <code>Select()</code> to avoid over-fetching, enable query splitting for complex includes, and always measure with <code>ToQueryString()</code> during development.</p>
+
+<h2>Validation at the Edge</h2>
+<p>Validate incoming requests as early as possible. FluentValidation combined with ASP.NET Core's built-in model validation gives you clean, reusable validation logic that doesn't clutter your controllers.</p>
+
+<h2>Authentication &amp; Authorization</h2>
+<p>JWT-based authentication with refresh tokens is the standard for stateless APIs. Use policy-based authorization to keep access control declarative and centralized rather than scattered across controllers.</p>
+
+<h2>Observability</h2>
+<p>Structured logging with Serilog, health checks, and basic metrics give you visibility into production behaviour without needing a full observability stack from day one.</p>
+
+<h2>Key Takeaways</h2>
+<ul>
+  <li>Clean architecture pays off as the project grows — don't skip it.</li>
+  <li>Measure query performance early; don't optimize blind.</li>
+  <li>Good validation and auth are non-negotiable for production APIs.</li>
+</ul>

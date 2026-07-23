@@ -1,0 +1,55 @@
+@if (Type == "card" || Type == "blog-post")
+{
+    <MudGrid>
+        @for (int i = 0; i < Count; i++)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="4">
+                <MudCard Class="skeleton-card">
+                    @if (Type == "blog-post")
+                    {
+                        <MudCardContent>
+                            <div class="skeleton-line" style="width:40%;"></div>
+                            <div class="skeleton-line" style="width:80%;"></div>
+                            <div class="skeleton-line" style="width:60%;"></div>
+                            <div class="skeleton-line" style="width:30%;"></div>
+                        </MudCardContent>
+                    }
+                    else
+                    {
+                        <div class="skeleton-rect"></div>
+                        <MudCardContent>
+                            @for (int l = 0; l < Lines; l++)
+                            {
+                                <div class="skeleton-line" style="width:@($"{(l == 0 ? 80 : l == Lines - 1 ? 40 : 60)}%");"></div>
+                            }
+                        </MudCardContent>
+                    }
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+}
+else if (Type == "timeline")
+{
+    <div class="d-flex flex-column gap-6 pa-4">
+        @for (int i = 0; i < Count; i++)
+        {
+            <MudPaper Class="pa-4" Elevation="0" Outlined="true">
+                <div class="skeleton-line" style="width:30%;"></div>
+                <div class="skeleton-line" style="width:70%;"></div>
+                <div class="skeleton-line" style="width:50%;"></div>
+                <div class="skeleton-line" style="width:90%;"></div>
+            </MudPaper>
+        }
+    </div>
+}
+else if (Type == "text")
+{
+    <div class="pa-4">
+        @for (int i = 0; i < Lines; i++)
+        {
+            <div class="skeleton-line" style="width:@($"{(i == Lines - 1 ? 40 : 80)}%");"></div>
+        }
+    </div>
+}
+

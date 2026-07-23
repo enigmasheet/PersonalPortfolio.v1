@@ -1,0 +1,79 @@
+@page "/projects"
+
+<SeoMeta Title="@Seo.PageTitle("Projects")"
+         Description="@(_content?.Sections?["projects"]?.Description ?? Seo.DefaultDescription)" />
+
+<div data-reveal><MudContainer Class="page-section">
+    <SectionHeader Label="@_content?.Sections?["projects"]?.Label"
+                   Title="@_content?.Sections?["projects"]?.Title"
+                   Description="@_content?.Sections?["projects"]?.Description" />
+
+    @if (_projects == null)
+    {
+        <Skeleton Type="card" Count="3" />
+    }
+    else
+    {
+        <div class="project-controls mb-6">
+            <MudTextField @bind-Value="_searchQuery" Placeholder="Search projects..."
+                          Variant="Variant.Outlined" Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search"
+                          Class="search-input-custom" Clearable="true"
+                          Immediate="true" OnClearButtonClick="ClearSearch" />
+            <div class="d-flex flex-wrap justify-center gap-1 mt-4">
+                <MudChip T="string" Color="Color.Primary" Variant="@(_activeTech == null ? Variant.Filled : Variant.Outlined)"
+                         OnClick="() => SetActiveTech(null)" Class="mb-1">All</MudChip>
+                @foreach (var tech in allTechnologies)
+                {
+                    var count = (_projects ?? []).Count(p => p.Technologies?.Contains(tech, StringComparer.OrdinalIgnoreCase) == true);
+                    <MudChip @key="tech" T="string" Color="Color.Primary" Variant="@(_activeTech == tech ? Variant.Filled : Variant.Outlined)"
+                             OnClick="() => SetActiveTech(tech)" Class="mb-1">
+                        @tech (@count)
+                    </MudChip>
+                }
+                @if (_activeTech != null || !string.IsNullOrWhiteSpace(_searchQuery))
+                {
+                    <MudChip T="string" Color="Color.Primary" Variant="Variant.Outlined" OnClick="ClearFilters">Clear</MudChip>
+                }
+            </div>
+            <MudText Typo="Typo.caption" Align="Align.Center" Class="text-secondary mt-2">
+                @if (filteredProjects.Any())
+                {
+                    <span>Showing <strong>@filteredProjects.Count()</strong> of <strong>@(_projects?.Count ?? 0)</strong> projects</span>
+                }
+            </MudText>
+        </div>
+
+        @if (!filteredProjects.Any())
+        {
+            <div class="text-center py-8">
+                <MudText Typo="Typo.body1" Class="text-secondary mb-4">No projects match your criteria.</MudText>
+                <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="ClearFilters">Clear filters</MudButton>
+            </div>
+        }
+        else
+        {
+            <div data-reveal-stagger="80">
+                <MudGrid>
+                @foreach (var p in filteredProjects)
+                {
+                    <MudItem @key="p.Slug" xs="12" sm="6" lg="4">
+                        <div data-reveal><ProjectCard Slug="@p.Slug"
+                                     Title="@p.Title"
+                                     Description="@p.Description"
+                                     ImageUrls="@p.ImageUrls"
+                                     GitHubLink="@p.GitHubLink"
+                                     LiveDemo="@p.LiveDemo"
+                                     LiveDemoActive="@p.LiveDemoActive"
+                                     Technologies="@p.Technologies"
+                                     Tags="@p.Tags" />
+                        </div>
+                    </MudItem>
+                }
+            </MudGrid>
+        </div>
+        }
+    }
+    </MudContainer>
+</div>
+
