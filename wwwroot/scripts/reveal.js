@@ -1,12 +1,9 @@
 (function () {
-    if (globalThis.__revealInit) return;
-    globalThis.__revealInit = true;
-
     function initReveal() {
-        let els = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
+        var els = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
         if (!els.length) return;
 
-        let observer = new IntersectionObserver(function (entries) {
+        var observer = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('revealed');
@@ -16,10 +13,12 @@
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
         els.forEach(function (el) {
-            let staggerParent = el.closest('[data-reveal-stagger]');
+            if (el.classList.contains('revealed')) return;
+            var staggerParent = el.closest('[data-reveal-stagger]');
             if (staggerParent) {
-                let stagger = Number.parseInt(staggerParent.dataset.revealStagger) || 100;
-                let children = staggerParent.querySelectorAll('[data-reveal]');
+                var stagger = Number.parseInt(staggerParent.dataset.revealStagger) || 100;
+                var children = staggerParent.querySelectorAll('[data-reveal]:not(.revealed)');
+                if (!children.length) return;
                 children.forEach(function (child, i) {
                     child.style.transitionDelay = (i * stagger) + 'ms';
                     observer.observe(child);
@@ -30,9 +29,26 @@
         });
     }
 
+    function watchReveals() {
+        var app = document.getElementById('app');
+        if (!app) return;
+        var timer;
+        var mo = new MutationObserver(function () {
+            clearTimeout(timer);
+            timer = setTimeout(initReveal, 50);
+        });
+        mo.observe(app, { childList: true, subtree: true });
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initReveal);
+        document.addEventListener('DOMContentLoaded', function () {
+            initReveal();
+            watchReveals();
+        });
     } else {
         initReveal();
+        watchReveals();
     }
+
+    globalThis.initReveal = initReveal;
 })();
